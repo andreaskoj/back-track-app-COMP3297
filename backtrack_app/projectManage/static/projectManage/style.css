@@ -22,6 +22,10 @@
     vertical-align: middle;
 } */
 
+body {
+    background-color:aliceblue;
+  }
+  
 a{
     text-decoration:none;
     color: black;

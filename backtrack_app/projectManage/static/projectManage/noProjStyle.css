@@ -17,25 +17,19 @@
     line-height: 20px;
 
 }
-
 body {
     background-color:aliceblue;
   }
+
+/* #nav-bar tr td b{
+    vertical-align: middle;
+} */
 
 a{
     text-decoration:none;
     color: black;
 }
 
-/* #nav-bar tr td a{
-  text-decoration-color: black; 
-} */
-
-/* #nav-bar tr td b{
-    vertical-align: middle;
-} */
-
-  
 #nav-bar tr td:first-child {
     width: 600px;
 }
@@ -43,11 +37,11 @@ a{
 #nav-bar tr td:nth-child(2) {
     /*project*/
     width: 180px;
+    background-color: lightblue;
 }
 
 #nav-bar tr td:nth-child(3) {
     /*Product Backlog*/
-    background-color: lightblue;
     width: 300px;
 }
 
@@ -65,4 +59,28 @@ a{
     height: 30px;
     display: block;
     margin-left: 15px;
+}
+
+.panel{
+    margin-top: 10px;
+    margin-left: 22px;
+    margin-right: 20px;
+    background: white;
+    width: 1371px;
+    height: 600px;
+    border: 1px solid black;
+}
+
+#createBtn{
+    margin-top: 255px;
+    margin-left: auto;
+    margin-right:auto;
+    background-color:rgb(148, 73, 63);
+    width: 200px;
+    padding-top: 10px; 
+    padding-left: 10px; 
+    font-size: 20px;
+    line-height: 20px;
+    height: 40px;
+    border: 1px solid black;
 }

@@ -18,6 +18,10 @@
 
 }
 
+/* #nav-bar tr td b{
+    vertical-align: middle;
+} */
+
 body {
     background-color:aliceblue;
   }
@@ -27,15 +31,6 @@ a{
     color: black;
 }
 
-/* #nav-bar tr td a{
-  text-decoration-color: black; 
-} */
-
-/* #nav-bar tr td b{
-    vertical-align: middle;
-} */
-
-  
 #nav-bar tr td:first-child {
     width: 600px;
 }
@@ -43,11 +38,11 @@ a{
 #nav-bar tr td:nth-child(2) {
     /*project*/
     width: 180px;
+    background-color: lightblue;
 }
 
 #nav-bar tr td:nth-child(3) {
     /*Product Backlog*/
-    background-color: lightblue;
     width: 300px;
 }
 

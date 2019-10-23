@@ -1,5 +1,5 @@
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'projectManage/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'projectManage/noProjStyle.css' %}">
 <table id="nav-bar">
     <tr>
         <td><b>BackTrack</b></td>
@@ -9,4 +9,8 @@
         <td><img id="humanIcon" src="{% static 'projectManage/humanIcon.png' %}"></td>
     </tr>
 </table>
+
+<div class="panel">
+    <div id="createBtn"><a href="/projectManage/createProject" >Create New Project</a></div>
+</div>
 

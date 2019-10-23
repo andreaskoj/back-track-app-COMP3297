@@ -1,54 +1,13 @@
-#nav-bar {
-    margin-top: 30px;
-    column-count: 4;
-    margin-left: 20px;
-    margin-right: 20px;  
-}
 
-#nav-bar tr td{
-    background-color: aliceblue;
-    float: left;
-    width: 100%;
-    height: 30px;
-    padding-top: 10px; 
-    padding-left: 10px; 
-    border: 1px solid black;
-    font-size: 20px;
-    line-height: 20px;
-
-}
-
-/* #nav-bar tr td b{
-    vertical-align: middle;
-} */
-
+  .logo {
+    font-family: 'Peralta', cursive;
+  }
   
-#nav-bar tr td:first-child {
-    width: 600px;
-}
-
-#nav-bar tr td:nth-child(2) {
-    /*project*/
-    width: 180px;
-}
-
-#nav-bar tr td:nth-child(3) {
-    /*Product Backlog*/
-    width: 300px;
-}
-
-#nav-bar tr td:nth-child(4) {
-    /*Sprint*/
-    width: 160px;
-}
-
-#nav-bar tr td:nth-child(5) {
-    width: 70px;
-}
-
-#humanIcon{
-    width: 30px;
-    height: 30px;
-    display: block;
-    margin-left: 15px;
-}
+  /* .logo a {
+    color: rgba(0,0,0,.9);
+  }
+  
+  .logo a:hover,
+  .logo a:active {
+    text-decoration: none;
+  } */

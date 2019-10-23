@@ -4,3 +4,9 @@ from django.views.generic import TemplateView
 # Create your views here.
 class ProjectManageManagement(TemplateView): 
 	template_name = "projectManage/projectManage.html"
+
+class noProject(TemplateView): 
+	template_name = "projectManage/noProject.html"
+
+class createProject(TemplateView): 
+	template_name = "projectManage/projectCreate.html"

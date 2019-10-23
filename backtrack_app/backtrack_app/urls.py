@@ -21,5 +21,6 @@ urlpatterns = [
     path('productBacklog/', include('productBacklog.urls')),
     path('projectManage/', include('projectManage.urls')),
     path('sprints/', include('sprints.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('login/', include('login.urls')),
 ]
