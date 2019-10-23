@@ -4,6 +4,6 @@ from projectManage import views
 
 urlpatterns = [
     path('',views.ProjectManageManagement.as_view(), name='projectManage'),
-    path('noproject',views.noProject.as_view(), name='noProject'),
-    path('createproject',views.createProject.as_view(), name='createProject'),
+    path('noProject',views.noProject.as_view(), name='noProject'),
+    path('createProject',views.createProject.as_view(), name='createProject'),
 ]
