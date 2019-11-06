@@ -12,6 +12,11 @@
 
 <div class="panel">
     <ul class="createList">
+            <form action="/project-name/" method="post">
+                <label for="your_name">Your name: </label>
+                <input id="your_name" type="text" name="your_name" value="{{ current_name }}">
+                <input type="submit" value="OK">
+            </form>
         <li><h2>Create a new Project</h2></li>
         <li><p>Project name:</p></li>
         <li><p>Invite Members:</p></li>
