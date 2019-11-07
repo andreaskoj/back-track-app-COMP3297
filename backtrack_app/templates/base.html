@@ -1,5 +1,5 @@
-{% load static %}
-{% block stylelink %}{% endblock %}
+{%load static from staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 <table id="nav-bar">
     <tr>
         <td><b>BackTrack</b></td>
@@ -10,10 +10,8 @@
     </tr>
 </table>
 
-<div class="panel">
-    {% block content %}{% endblock %}
-</div>
+{% block content %}{% endblock %}
 
+{% block script %}{% endblock %}
 
-
-
+{% block style%}{% endblock %}
