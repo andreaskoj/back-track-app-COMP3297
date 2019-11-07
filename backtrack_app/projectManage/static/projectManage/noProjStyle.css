@@ -38,7 +38,6 @@ a{
 #nav-bar tr td:nth-child(2) {
     /*project*/
     width: 180px;
-    background-color: lightblue;
 }
 
 #nav-bar tr td:nth-child(3) {

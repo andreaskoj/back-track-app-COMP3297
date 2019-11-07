@@ -11,3 +11,6 @@ class SprintsManagement(TemplateView):
 		context['pbi_list']=PBI.objects.filter(sprint__pk=sprint)
 		context['sprint']=SprintBacklog.objects.get(pk=sprint)
 		return context
+
+class SprintBackLogsManagement(TemplateView):
+	template_name = "sprints/sprintBacklogs.html"
