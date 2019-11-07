@@ -1,5 +1,5 @@
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'projectManage/style.css' %}">
+{% block stylelink %}{% endblock %}
 <table id="nav-bar">
     <tr>
         <td><b>BackTrack</b></td>
@@ -9,6 +9,11 @@
         <td><img id="humanIcon" src="{% static 'projectManage/humanIcon.png' %}"></td>
     </tr>
 </table>
+
+<div class="panel">
+    {% block content %}{% endblock %}
+</div>
+
 
 
 

@@ -1,4 +1,11 @@
-{% load static %}
+{% extends 'base.html' %}
+{% block stylelink %}<link rel="stylesheet" type="text/css" href="/static/projectManage/noProjStyle.css">{% endblock %}
+
+{% block content %}
+    <div id="createBtn"><a href="/projectManage/createProject" >Create New Project</a></div>
+{% endblock %}
+
+<!-- {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'projectManage/noProjStyle.css' %}">
 <table id="nav-bar">
     <tr>
@@ -12,5 +19,5 @@
 
 <div class="panel">
     <div id="createBtn"><a href="/projectManage/createProject" >Create New Project</a></div>
-</div>
+</div> -->
 
