@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
+
 # Create your views here.
-class LoginManagement(TemplateView): 
-	template_name = "login/login.html"
+class LoginManagement(TemplateView):
+    template_name = "login.html"
+

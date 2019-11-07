@@ -3,9 +3,35 @@
 <table id="nav-bar">
     <tr>
         <td><b>BackTrack</b></td>
-        <td><b><a href="/projectManage" >Project</a></b></td></a>
+        <td><b><a href="/projectManage">Project</a></b></td>
+        </a>
         <td><b><a href="/productBacklog">Product Backlog</a></b></td>
         <td><b><a href="/sprints">Sprint</a></b></td>
         <td><img id="humanIcon" src="{% static 'sprints/humanIcon.png' %}"></td>
     </tr>
 </table>
+<div style="margin-left: 20px;margin-right: 120px" class="container">
+
+    <div class="row">
+        <h1 style="text-align: left;margin-left: 20px;margin-top:40px">Sprint Backlog Overview</h1></div>
+    <div class="row"><h2 style="text-align: left;margin: 20px">Sprint {{sprint}}</h2></div>
+    <div class="row" style="display: flex;">
+        <div class="column" style="flex: 50%; margin-top: 10px">
+            <textarea style="margin-left: 20px" rows="20" cols="80" title="description">Description</textarea>
+            <!--<button name="save">save</button>-->
+        </div>
+        <div class="column" style="flex: 50%;margin-top: 10px">
+            {% for pbi in pbi_list %}
+            <div class="card" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);">
+                <div class="container" style="padding: 2px 16px;">
+                <h4><b>{{pbi.description}}</b></h4>
+                <p>{{pbi.status}}</p>
+                </div>
+            </div>
+            {%empty%}
+            <div>No PBI yet.</div>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
