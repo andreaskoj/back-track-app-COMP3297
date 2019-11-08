@@ -18,15 +18,15 @@
             </div>
         </div>
         <div class="column" style="flex: 50%;margin-top: 10px">
-            {% for pbi in pbi_list %}
+            {% for task in task_list %}
             <div class="card" style="margin-bottom:8px;background-color: white;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);margin-right: 30px">
                 <a href="pbi{{pbi.id}}">
                 <div class="cardcontainer" style="padding: 2px 10px;">
-                <div><b>PBI {{pbi.id}}</b></div>
-                <div class="cardStatus">{{pbi.status}}</div>
-                <div>Description: {{pbi.description}}</div>
-                <div>Total Effort: </div>
-                <div>Remaining Effort: </div>
+                <div><b>PBI {{task.pbi.id}}</b></div>
+                <div class="cardStatus">{{task.status}}</div>
+                <div>Description: {{task.pbi.description}}</div>
+                <div>Total Effort: {{task.totalEf}} </div>
+                <div>Remaining Effort: {{task.remainEf}}</div>
                 
                 </div>
                 </a>

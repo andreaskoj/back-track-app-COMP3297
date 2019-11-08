@@ -58,6 +58,8 @@ class PBI(models.Model):
 class Task(models.Model):
     description=models.CharField(max_length=200)
     id=models.AutoField(primary_key=True)
+    totalEf = models.IntegerField(default=10)
+    remainEf = models.IntegerField(default=10)
     pbi=models.ForeignKey(PBI, on_delete=models.CASCADE)
     objects = models.Manager()
     # burndown = models.OneToOneField(BurndownChart, on_delete=models.CASCADE)

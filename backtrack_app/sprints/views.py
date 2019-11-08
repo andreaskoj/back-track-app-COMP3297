@@ -9,7 +9,7 @@ class SprintsManagement(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['pbi_list'] = PBI.objects.filter()
+        context['task_list'] = Task.objects.all()
         context['sprint'] = SprintBacklog.objects.get(pk=1)
         return context
 
