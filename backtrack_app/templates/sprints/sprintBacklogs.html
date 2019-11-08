@@ -54,24 +54,23 @@
             </form>
         </div>
         <hr>
-        <div id="total" onload="calculate()">
-            <span class="initEsti circle"></span>
-            <span class="remainEsti circle"></span>
+        <div id="total" onload="calculate();">
+            <span class="initEsti circle" id="total_efforts"></span>
+            <span class="remainEsti circle" id="remaining_efforts"></span>
         </div>
-        
+
         <hr>
     </div>
 
-    
 
-    
+
+
 </div>
 
 {% endblock %}
 
 {% block script %}
 <script>
-
 
     function addBtnOnclick(){
         document.getElementById("addPanel").style.display = "block";
