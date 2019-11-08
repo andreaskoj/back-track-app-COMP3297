@@ -66,6 +66,7 @@ class SubTask(models.Model):
     task=models.ForeignKey(Task, on_delete=models.CASCADE)
     initialEstimatedEffort = models.IntegerField(null=True)
     remaining_efforts = models.IntegerField(null=True)
+    Developers = models.ManyToManyField(Developers, on_delete=models.SET_NULL, null=True)
 
 
 
