@@ -103,6 +103,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# AUTH_USER_MODEL = "sprints.ScrumMaster" 
+# AUTH_USER_MODEL = "sprints.Developer" 
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
