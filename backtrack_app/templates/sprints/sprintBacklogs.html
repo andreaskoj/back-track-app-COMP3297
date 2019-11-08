@@ -24,7 +24,20 @@
             </li>
         </ul>
         <hr>
-        <div id="addBtn">+</div>
+        <div>
+            <div id="addBtn" onclick="addBtnOnclick()">+</div>
+            <form id="subTaskForm">
+                <div id="addPanel">
+                    <div>Initial Estimated Effort:</div>
+                    <div>Remained Estimated Effort:</div>
+                    <div>Task Name:</div>
+                    <div>People in charge:</div>
+                    <div>Status:</div>
+                    <div id="okBtn" class="formBtn" onclick="formBtnOnclick()">Ok</div>
+                    <div id="cancelBtn" class="formBtn" onclick="formBtnOnclick()">Cancel</div>
+                </div>
+            </form>
+        </div>
         <hr>
         <div id="total">
             <span class="initEsti circle"></span>
@@ -33,12 +46,25 @@
         
         <hr>
     </div>
+
+    
+
     
 </div>
 
 {% endblock %}
 
 {% block script %}
+<script>
+    function addBtnOnclick(){
+        document.getElementById("addPanel").style.display = "block";
+    }
+
+    function formBtnOnclick(){
+        document.getElementById("addPanel").style.display = "none";
+    }
+
+</script>
 {% endblock %}
 
 {% block style %}
@@ -112,6 +138,7 @@
     #subTaskList{
         width:1380px;
         height:auto;
+        margin-bottom: 30px;
     }
 
     #completionrate{
@@ -145,7 +172,8 @@
         height:20px;
         float:left;
         border: 1px black solid;
-        margin: 10px;
+        margin-left: 10px;
+        margin-bottom: 10px; 
         padding-left: 5px;
         padding-right: 5px; 
         font-size: 20px;
@@ -174,6 +202,33 @@
 
     #total{
         margin-left: 10px;
+    }
+
+    #addPanel{
+        width: 400px;
+        height: 200px;
+        border: 1px black solid;
+        position: absolute;
+        overflow: auto;
+        margin-left: 40px;
+        background: white;
+        display: none;
+    }
+
+    #addPanel div{
+        padding-left:5px;
+        padding-top:5px;
+    }
+
+    .formBtn{
+        float: right;
+        margin: 10px;
+        width:100px;
+        height: 30px;
+        font-size: 20px;
+        border: 1px black solid;
+        background-color:rgb(148, 73, 63);
+
     }
 
 
