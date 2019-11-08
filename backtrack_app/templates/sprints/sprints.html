@@ -1,15 +1,5 @@
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'sprints/style.css' %}">
-<table id="nav-bar">
-    <tr>
-        <td><b>BackTrack</b></td>
-        <td><b><a href="/projectManage">Project</a></b></td>
-        </a>
-        <td><b><a href="/productBacklog">Product Backlog</a></b></td>
-        <td><b><a href="/sprints">Sprint</a></b></td>
-        <td><img id="humanIcon" src="{% static 'sprints/humanIcon.png' %}"></td>
-    </tr>
-</table>
+{% extends 'base.html' %}
+{% block content %}
 <div style="height: 100%;background-color:white; margin-left: 20px;margin-right: 120px" class="container">
 
     <div class="row">
@@ -41,3 +31,16 @@
     </div>
 
 </div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}
+
+{% block style %}
+<style>
+    #nav-bar tr td:nth-child(4) {
+    background-color: lightblue;
+    }
+
+</style>
+{% endblock %}

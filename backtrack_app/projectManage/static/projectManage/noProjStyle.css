@@ -17,13 +17,14 @@
     line-height: 20px;
 
 }
-body {
-    background-color:aliceblue;
-  }
 
 /* #nav-bar tr td b{
     vertical-align: middle;
 } */
+
+body {
+    background-color:aliceblue;
+  }
 
 a{
     text-decoration:none;
@@ -37,7 +38,6 @@ a{
 #nav-bar tr td:nth-child(2) {
     /*project*/
     width: 180px;
-    background-color: lightblue;
 }
 
 #nav-bar tr td:nth-child(3) {
@@ -70,6 +70,27 @@ a{
     height: 600px;
     border: 1px solid black;
 }
+
+#createList{
+    list-style-type:none; 
+    margin-left: 550px;
+    margin-top:50px
+}
+
+#createList li{
+    margin-top:30px;
+
+}
+
+#submitBtn{ 
+    border: 1px solid black; 
+    width: 100px;
+    padding-left: 10px;
+    background-color:rgb(148, 73, 63);
+}
+
+
+
 
 #createBtn{
     margin-top: 255px;

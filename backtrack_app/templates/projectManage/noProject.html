@@ -1,16 +1,83 @@
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'projectManage/noProjStyle.css' %}">
-<table id="nav-bar">
-    <tr>
-        <td><b>BackTrack</b></td>
-        <td><b><a href="/projectManage" >Project</a></b></td>
-        <td><b><a href="/productBacklog">Product Backlog</a></b></td>
-        <td><b><a href="/sprints">Sprint</a></b></td>
-        <td><img id="humanIcon" src="{% static 'projectManage/humanIcon.png' %}"></td>
-    </tr>
-</table>
+{% extends 'base.html' %}
 
+{% block content %}
 <div class="panel">
-    <div id="createBtn"><a href="/projectManage/createProject" >Create New Project</a></div>
+    <div id="createBtn" onclick="createBtnOnclick()"><p>Create New Project</p></div>
+
+    <ul id="createList">
+            <!-- <form action="/project-name/" method="post">
+                <label for="your_name">Your name: </label>
+                <input id="your_name" type="text" name="your_name" value="{{ current_name }}">
+                <input type="submit" value="OK">
+            </form> -->
+        <li><h2>Create a new Project</h2></li>
+        <li><p>Project name:</p></li>
+        <li><p>Invite Members:</p></li>
+        <li><p>Manager:</p></li>
+        <li><p>Developer:</p></li>
+        <li><div id= "submitBtn">Submit</div></li>
+    
+    
+    </ul>
 </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        function createBtnOnclick(){
+            document.getElementById("createBtn").style.display = "none";
+            document.getElementById("createList").style.display = "block";
+        }
+    </script>
+
+{% endblock %}
+
+
+{% block style %}
+    <style>
+    #nav-bar tr td:nth-child(2) {
+    /*project*/
+    width: 180px;
+    background-color: lightblue;
+    }
+
+    #createList{
+    list-style-type:none; 
+    margin-left: 550px;
+    margin-top:50px;
+    display:none;
+    }
+
+    #createList li{
+        margin-top:30px;
+
+    }
+
+    #submitBtn{ 
+        border: 1px solid black; 
+        width: 100px;
+        padding-left: 10px;
+        background-color:rgb(148, 73, 63);
+    }
+
+
+
+
+    #createBtn{
+        margin-top: 255px;
+        margin-left: auto;
+        margin-right:auto;
+        background-color:rgb(148, 73, 63);
+        width: 200px;
+        padding-top: 10px; 
+        padding-left: 10px; 
+        font-size: 20px;
+        line-height: 20px;
+        height: 40px;
+        border: 1px solid black;
+    }
+
+    </style>
+
+{% endblock %}
 
