@@ -16,31 +16,40 @@
         <div id="completionrate">9/10</div>
         <hr>
         <ul>
+            {% for subtask in subtask_list %}
             <li>
-                <span class="initEsti circle" style="float:left;"></span>
-                <span class="remainEsti circle"style="float:left;"></span>
-                <div style="float:left;">Task Name</div>
+                <span class="initEsti circle" style="float:left;"> <span style="margin-left:3px;">{{subtask.initialEstimatedEffort}}</span></span>
+                <span class="remainEsti circle"style="float:left;"> <span style="margin-left:5px;">{{subtask.remaining_efforts}}</span></span>
+                <div style="float:left;">{{subtask.title}}</div>
                 
-                <div style="float:right; ">Status</div>
+                <div style="float:right; ">{{subtask.status}}</div>
                 <div style="float:right;" >
                     <div class="circle" onclick="pplBtnOnClick(event)"></div>
                     <div class="taskInvoleBtn" onclick="taskInvolveBtnOnClick(event)">Join</div>
                 </div>
             </li>
+            <hr>
+            {% endfor %}
         </ul>
-        <hr>
+    
         <div>
             <div id="addBtn" onclick="addBtnOnclick()">+</div>
-            <form id="subTaskForm" action="addSubtask" method="post">
+            <form id="subTaskForm" action="addSubtask/" method="post">
+                <input type="hidden" name="pbiID" value={{pbiID}} />
                 <div id="addPanel">
                     {% csrf_token %}
-                    <div>Initial Estimated Effort:<input type="text" name="initialEstimatedEffort" size="50" ></div>
-                    <div>Remained Estimated Effort:<input type="text" name="remaining_efforts" size="50" ></div>
-                    <div>Task Name:</div>
-                    <div>People in charge:</div>
-                    <div>Status:</div>
-                    <div id="okBtn" class="formBtn" onclick="formBtnOnclick()">Ok</div>
-                    <div id="cancelBtn" class="formBtn" onclick="formBtnOnclick()">Cancel</div>
+                    <div>Initial Estimated Effort:<input id="iee" type="text" name="initialEstimatedEffort"  ></div>
+                    <div>Remained Estimated Effort:<input id="ree" type="text" name="remaining_efforts"  ></div>
+                    <div>Task Name:<input id="subname" type="text" name="title" ></div>
+                    <div>Status:
+                        <select id="statusInput">
+                            <option value="NS">Not started</option>
+                            <option value="IP">In progress</option>
+                            <option value="C">Complete</option>
+                          </select>
+                    </div>
+                    <div id="okBtn" class="formBtn"><input type="Submit" value="Ok" id="ok"></div>
+                    <div id="cancelBtn" class="formBtn" onclick="cancelBtnOnclick()">Cancel</div>
                 </div>
             </form>
         </div>
@@ -66,8 +75,29 @@
         document.getElementById("addPanel").style.display = "block";
     }
 
-    function formBtnOnclick(){
+    // function formBtnOnclick(){
+    //     document.getElementById("addPanel").style.display = "none";
+    //     var iee = document.getElementById("iee").value;
+    //     var ree = document.getElementById("ree").value;
+    //     var name = document.getElementById("subname").value;
+    //     var a = document.getElementById("dropdown");
+    //     var status = a.options[a.selectedIndex].value;
+
+
+
+    // }
+
+    function resetform(){
+        document.getElementById("iee").value = "";
+        document.getElementById("ree").value = "";
+        document.getElementById("subname").value = "";
+        document.getElementById("dropdown").selectedIndex = 0;
+        
+    }
+
+    function cancelBtnOnclick(){
         document.getElementById("addPanel").style.display = "none";
+        resetform();
     }
 
     function pplBtnOnClick(ev){
@@ -85,7 +115,15 @@
     }
 
     function taskInvolveBtnOnClick(ev){
+        var xmlhttp = new XMLHttpRequest();    
+    
+            xmlhttp.onreadystatechange = function(){	
+            if (xmlhttp.readyState == 4  && xmlhttp.status ==200){
+              
+              
+            }
         ev.target.style.display="none";
+    }
     }
 
 </script>
@@ -196,6 +234,7 @@
         display: inline-block;
         overflow: auto;
         margin-right:5px;
+        font-style: white;
     }
 
 
@@ -213,10 +252,11 @@
     }
 
     ul{
-        padding-inline-start: 10px; 
+        padding-inline-start: 0px; 
     }
 
     li{
+        margin-left:10px; 
         list-style:none;
         
     }
@@ -249,6 +289,18 @@
     #addPanel div{
         padding-left:5px;
         padding-top:5px;
+    }
+
+    input{
+        margin-left:5px;
+    }
+
+    #ok{
+        width:100px;
+        height: 30px;
+        background-color:rgb(148, 73, 63);
+        border:none;
+        margin-left: 0px; 
     }
 
     .formBtn{

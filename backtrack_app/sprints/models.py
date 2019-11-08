@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 class ScrumMaster(models.Model):
     user=models.OneToOneField(User,related_name="ScrumMaster",on_delete=models.CASCADE)
     def __str__(self):
-        return self.username
+        return self.user.username
 
 class Project(models.Model):
     name=models.CharField(max_length=200)
@@ -18,7 +18,7 @@ class Developer(models.Model):
     isProductOwner = models.BooleanField(null=True, default=False)
     project = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True)
     def __str__(self):
-        return self.username
+        return self.user.username
 
 
 
@@ -63,10 +63,13 @@ class Task(models.Model):
 class SubTask(models.Model):
     title=models.CharField(max_length=200)
     id=models.AutoField(primary_key=True)
-    task=models.ForeignKey(Task, on_delete=models.CASCADE)
+    task=models.ForeignKey(Task, on_delete=models.CASCADE,null=True)
+    pbi=models.ForeignKey(PBI, on_delete=models.CASCADE,related_name="SubTask",default=0)
     initialEstimatedEffort = models.IntegerField(null=True)
     remaining_efforts = models.IntegerField(null=True)
     Developers = models.ManyToManyField(Developer,  null=True)
+    STATUS=(('NS','Not started'),('IP','In progress'),('C','Complete'))
+    status=models.CharField(max_length=10,choices=STATUS, default='IP')
 
 
 

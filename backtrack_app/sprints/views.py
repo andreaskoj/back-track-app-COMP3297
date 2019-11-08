@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
-from .models import SprintBacklog, PBI, Task
+from .models import SprintBacklog, PBI, Task, SubTask
 
 
 # Create your views here.
@@ -21,5 +21,19 @@ class SprintBackLogsManagement(TemplateView):
         context = super().get_context_data(**kwargs)
         context['task_list']=Task.objects.filter(pbi__pk=pbi)
         context['pbi']=PBI.objects.get(pk=pbi)
+        context['subtask_list']=SubTask.objects.filter(pbi__pk=pbi)
+        context['pbiID']=pbi
         return context
 
+def addSubtask(request):
+    initialEstimatedEffort = str(request.POST['initialEstimatedEffort'])
+    remaining_efforts = str(request.POST['remaining_efforts'])
+    title = str(request.POST['title'])
+    status = str(request.POST.get('status'))
+    pbi = PBI.objects.get(pk=str(request.POST['pbiID']))
+    SubTask.objects.create(initialEstimatedEffort = initialEstimatedEffort, 
+             remaining_efforts = remaining_efforts, title = title, status = status, 
+             pbi =pbi
+            )
+    #return render(request, 'pbi_list.html')
+    return redirect('http://127.0.0.1:8000/sprints/pbi1')
