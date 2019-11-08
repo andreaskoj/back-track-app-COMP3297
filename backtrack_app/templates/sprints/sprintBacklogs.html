@@ -13,13 +13,13 @@
 
     <div id="subTaskList">
         <div class="title">Sub-Tasks</div>
-        <div id="completionrate">9/10</div>
+        <div id="completionrate"></div>
         <hr>
         <ul>
             {% for subtask in subtask_list %}
             <li>
-                <span class="initEsti circle" style="float:left;"> <span style="margin-left:3px;">{{subtask.initialEstimatedEffort}}</span></span>
-                <span class="remainEsti circle"style="float:left;"> <span style="margin-left:5px;">{{subtask.remaining_efforts}}</span></span>
+                <span class="initEsti circle" style="float:left; text-align: center"> <span style="margin-left:3px;">{{subtask.initialEstimatedEffort}}</span></span>
+                <span class="remainEsti circle"style="float:left;; text-align: center" > <span style="margin-left:5px;">{{subtask.remaining_efforts}}</span></span>
                 <div style="float:left;">{{subtask.title}}</div>
                 
                 <div style="float:right; ">{{subtask.status}}</div>
@@ -55,8 +55,8 @@
         </div>
         <hr>
         <div id="total" onload="calculate();">
-            <span class="initEsti circle" id="total_efforts"></span>
-            <span class="remainEsti circle" id="remaining_efforts"></span>
+            <span class="initEsti circle" id="total_efforts" style="text-align: center"></span>
+            <span class="remainEsti circle" id="remaining_efforts" style="text-align: center"></span>
         </div>
 
         <hr>
@@ -87,7 +87,6 @@
 
 
     // }
-
     window.onload=function calculate(){
         var arr_total_efforts=document.getElementsByClassName("initEsti circle");
         var arr_remaining_efforts=document.getElementsByClassName("remainEsti circle");
@@ -102,6 +101,7 @@
         document.getElementById("total_efforts").innerText=total_efforts.toString();
         document.getElementById("completionrate").innerText=burndown_efforts.toString()+"/"+total_efforts.toString();
         document.getElementById("remaining_efforts").innerText=remaining_efforts.toString();
+        document.getElementById("Status").innerText=remaining_efforts===0?"Complete":"In progress";
     };
 
     function resetform(){
