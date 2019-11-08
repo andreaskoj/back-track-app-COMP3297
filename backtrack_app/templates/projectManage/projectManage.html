@@ -1,10 +1,21 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'projectManage/style.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <table id="nav-bar">
     <tr>
         <td><b>BackTrack</b></td>
-        <td><b><a href="/projectManage" >Project</a></b></td>
-        <td><b><a href="/productBacklog">Product Backlog</a></b></td>
+        <td class="projectSelection">
+            <div class="dropdown">
+                <a href="/projectManage">Project</a>
+                <i class="fa fa-caret-down dropdown-icon"></i>
+                    <div class="dropdown-content">
+                      <a href="#">Project 1</a>
+                      <a href="#">Project 2</a>
+                      <a href="#">Project 3</a>
+                    </div>
+            </div>
+        </td>
+        <td><b><a href="/productBacklog">Product Backlog </a></b></td>
         <td><b><a href="/sprints">Sprint</a></b></td>
         <td><img id="humanIcon" src="{% static 'projectManage/humanIcon.png' %}"></td>
     </tr>
