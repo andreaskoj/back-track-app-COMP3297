@@ -5,8 +5,10 @@
     <div id="PBI_ID">PBI-ID {{pbi.id}}</div>
     <div id="Status">Status</div>
     <div id="PBI_Desc">
-        <div class="title">PBI Description {{pbi.description}}</div>
+        <div class="title">PBI Description </div>
+        
         <div id="estimatedEffort">10hrs</div>
+        <div class="description">{{pbi.description}}</div>
     </div>
 
     <div id="subTaskList">
@@ -134,6 +136,12 @@
         overflow: auto;
         border: 1px black solid;
         margin-bottom: 30px;
+    }
+
+    .description{
+        float:left;
+        width:1340px;
+        margin-left:15px;
     }
 
     .title{
@@ -265,6 +273,8 @@
         display: none;
 
     }
+
+
 
 
 
