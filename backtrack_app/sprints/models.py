@@ -34,6 +34,10 @@ class BurndownChart(models.Model):
 class SprintBacklog(models.Model):
     number=models.IntegerField()
     objects=models.Manager()
+    totalEf = models.IntegerField(default=10)
+    averageEf = models.IntegerField(default=10)
+    initialEf = models.IntegerField(default=10)
+    remainEf = models.IntegerField(default=10)
     id=models.AutoField(primary_key=True)
     # burndown = models.OneToOneField(BurndownChart, on_delete=models.CASCADE)
     def __str__(self):
@@ -54,6 +58,8 @@ class PBI(models.Model):
 class Task(models.Model):
     description=models.CharField(max_length=200)
     id=models.AutoField(primary_key=True)
+    totalEf = models.IntegerField(default=10)
+    remainEf = models.IntegerField(default=10)
     pbi=models.ForeignKey(PBI, on_delete=models.CASCADE)
     objects = models.Manager()
     # burndown = models.OneToOneField(BurndownChart, on_delete=models.CASCADE)
@@ -72,6 +78,7 @@ class SubTask(models.Model):
     status=models.CharField(max_length=10,choices=STATUS, default='IP')
     def __str__(self):
         return self.title
+
 
 
 

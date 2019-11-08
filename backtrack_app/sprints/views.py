@@ -9,7 +9,7 @@ class SprintsManagement(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['pbi_list'] = PBI.objects.filter()
+        context['task_list'] = Task.objects.all()
         context['sprint'] = SprintBacklog.objects.get(pk=1)
         return context
 
@@ -24,6 +24,14 @@ class SprintBackLogsManagement(TemplateView):
         context['subtask_list']=SubTask.objects.filter(pbi__pk=pbi)
         context['pbiID']=pbi
         return context
+
+class SprintCreate(TemplateView):
+    template_name = "sprints/createsprint.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['pbi_list']=PBI.objects.all()
+        return context
+
 
 def addSubtask(request):
     initialEstimatedEffort = str(request.POST['initialEstimatedEffort'])
