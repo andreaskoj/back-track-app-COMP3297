@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="background-color:white;height: 100%;margin-left: 20px;margin-right: 120px" class="container">
+<form method="POST" action="" style="margin-left: 20px">
+    {%csrf_token%}
+    {{form}}
+    <input class="btn btn-submit pull-right" href="" type="submit" value="Choose PBIs" />
+</form>
+{% endblock %}
+
+{% block script %}
+{% endblock %}
+
+{% block style %}
+<style>
+    #nav-bar tr td:nth-child(4) {
+    background-color: lightblue;
+    }
+    .card {
+  /* Add shadows to create the "card" effect */
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+    }
+    .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+
+
+</style>
+{% endblock %}
