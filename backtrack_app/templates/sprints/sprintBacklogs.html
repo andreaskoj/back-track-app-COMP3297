@@ -98,8 +98,9 @@
             total_efforts+=parseInt(arr_total_efforts[i].innerText);
             remaining_efforts+=parseInt(arr_remaining_efforts[i].innerText);
         }
-        // var burndown_efforts=total_efforts-remaining_efforts;
+        var burndown_efforts=total_efforts-remaining_efforts;
         document.getElementById("total_efforts").innerText=total_efforts.toString();
+        document.getElementById("completionrate").innerText=burndown_efforts.toString()+"/"+total_efforts.toString();
         document.getElementById("remaining_efforts").innerText=remaining_efforts.toString();
     };
 
