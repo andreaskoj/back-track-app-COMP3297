@@ -6,10 +6,9 @@ from .models import SprintBacklog, PBI
 class SprintsManagement(TemplateView): 
 	template_name = "sprints/sprints.html"
 	def get_context_data(self, **kwargs):
-		sprint=self.kwargs['sprint']
 		context=super().get_context_data(**kwargs)
-		context['pbi_list']=PBI.objects.filter(sprint__pk=sprint)
-		context['sprint']=SprintBacklog.objects.get(pk=sprint)
+		context['pbi_list']=PBI.objects.filter()
+		context['sprint']=SprintBacklog.objects.get(pk=1)
 		return context
 
 class SprintBackLogsManagement(TemplateView):
