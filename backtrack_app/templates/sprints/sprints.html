@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-<div style="margin-left: 20px;margin-right: 120px" class="container">
+
+<div style="margin-left: 20px;margin-right: 120px; " class="container" id="currentSprint">
 
     <div class="row">
         <h1 style="text-align: left;margin-left: 20px;margin-top:40px">Sprint Backlog Overview</h1></div>
@@ -42,10 +43,37 @@
 {% endblock %}
 
 {% block script %}
+<script>
+        function createBtnOnclick(){
+            document.getElementById("createBtn").style.display = "none";
+            document.getElementById("creating").style.display = "block";
+        }
+    </script>
 {% endblock %}
 
 {% block style %}
 <style>
+    #createBtn{
+        margin-top: 255px;
+        margin-left: auto;
+        margin-right:auto;
+        background-color:rgb(148, 73, 63);
+        width: 200px;
+        padding-top: 10px; 
+        padding-left: 10px; 
+        font-size: 20px;
+        line-height: 20px;
+        height: 40px;
+        border: 1px solid black;
+    }
+
+    .thediv{
+        float:left;
+        margin:20px;
+        width: 600px;
+        height: 600px;
+    }
+
     #nav-bar tr td:nth-child(4) {
     background-color: lightblue;
     }

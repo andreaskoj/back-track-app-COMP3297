@@ -7,4 +7,5 @@ urlpatterns = [
     path('',views.SprintsManagement.as_view(), name='sprints'),
     path('pbi<int:pbi>',views.SprintBackLogsManagement.as_view(), name='sprintBacklogs'),
      url(r'^addSubtask/$',views.addSubtask, name = 'addSubtask'),
+      path('createsprint',views.SprintCreate.as_view(), name='createsprints'),
 ]
