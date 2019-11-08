@@ -24,5 +24,4 @@ urlpatterns = [
     path('sprints/', include('sprints.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('login/', include('login.urls')),
-    path('task/',include('task.urls')),
 ]
