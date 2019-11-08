@@ -20,7 +20,10 @@
                 <div style="float:left;">Task Name</div>
                 
                 <div style="float:right; ">Status</div>
-                <span class="circle" style="float:right;"></span>
+                <div style="float:right;" >
+                    <div class="circle" onclick="pplBtnOnClick(event)"></div>
+                    <div class="taskInvoleBtn" onclick="taskInvolveBtnOnClick(event)">Join</div>
+                </div>
             </li>
         </ul>
         <hr>
@@ -62,6 +65,24 @@
 
     function formBtnOnclick(){
         document.getElementById("addPanel").style.display = "none";
+    }
+
+    function pplBtnOnClick(ev){
+        for(i = 0; i < ev.target.parentElement.children.length;++i){
+            if(ev.target.parentElement.children[i].className == "taskInvoleBtn"){
+                if(ev.target.parentElement.children[i].style.display!="block"){
+                    ev.target.parentElement.children[i].style.display="block";
+                }else{
+                    ev.target.parentElement.children[i].style.display="none";
+                }
+                
+            }
+        }
+        ev.target.parentElement.childNodes[0].style.display="block";
+    }
+
+    function taskInvolveBtnOnClick(ev){
+        ev.target.style.display="none";
     }
 
 </script>
@@ -231,7 +252,18 @@
 
     }
 
+    .taskInvoleBtn{
+        margin:0px;
+        width:50px;
+        height:30px;
+        position: absolute;
+        overflow: auto;
+        border: 1px black solid;
+        background-color:rgb(63, 148, 115);
+        line-height: 30px;
+        display: none;
 
+    }
 
 
 
