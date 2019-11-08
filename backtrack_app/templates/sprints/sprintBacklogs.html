@@ -42,7 +42,7 @@
                     <div>Remained Estimated Effort:<input id="ree" type="text" name="remaining_efforts"  ></div>
                     <div>Task Name:<input id="subname" type="text" name="title" ></div>
                     <div>Status:
-                        <select id="statusInput">
+                        <select id="statusInput" name="status">
                             <option value="NS">Not started</option>
                             <option value="IP">In progress</option>
                             <option value="C">Complete</option>
@@ -54,7 +54,7 @@
             </form>
         </div>
         <hr>
-        <div id="total">
+        <div id="total" onload="calculate()">
             <span class="initEsti circle"></span>
             <span class="remainEsti circle"></span>
         </div>
@@ -86,6 +86,10 @@
 
 
     // }
+
+    function calculate(){
+        
+    }
 
     function resetform(){
         document.getElementById("iee").value = "";

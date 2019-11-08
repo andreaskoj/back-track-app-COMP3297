@@ -70,6 +70,8 @@ class SubTask(models.Model):
     Developers = models.ManyToManyField(Developer,  null=True)
     STATUS=(('NS','Not started'),('IP','In progress'),('C','Complete'))
     status=models.CharField(max_length=10,choices=STATUS, default='IP')
+    def __str__(self):
+        return self.title
 
 
 
