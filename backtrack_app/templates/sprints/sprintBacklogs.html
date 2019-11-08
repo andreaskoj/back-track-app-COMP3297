@@ -13,13 +13,13 @@
 
     <div id="subTaskList">
         <div class="title">Sub-Tasks</div>
-        <div id="completionrate">9/10</div>
+        <div id="completionrate"></div>
         <hr>
         <ul>
             {% for subtask in subtask_list %}
             <li>
-                <span class="initEsti circle" style="float:left;"> <span style="margin-left:3px;">{{subtask.initialEstimatedEffort}}</span></span>
-                <span class="remainEsti circle"style="float:left;"> <span style="margin-left:5px;">{{subtask.remaining_efforts}}</span></span>
+                <span class="initEsti circle" style="float:left; text-align: center"> <span style="margin-left:3px;">{{subtask.initialEstimatedEffort}}</span></span>
+                <span class="remainEsti circle"style="float:left;; text-align: center" > <span style="margin-left:5px;">{{subtask.remaining_efforts}}</span></span>
                 <div style="float:left;">{{subtask.title}}</div>
                 
                 <div style="float:right; ">{{subtask.status}}</div>
@@ -54,23 +54,24 @@
             </form>
         </div>
         <hr>
-        <div id="total" onload="calculate()">
-            <span class="initEsti circle"></span>
-            <span class="remainEsti circle"></span>
+        <div id="total" onload="calculate();">
+            <span class="initEsti circle" id="total_efforts" style="text-align: center"></span>
+            <span class="remainEsti circle" id="remaining_efforts" style="text-align: center"></span>
         </div>
-        
+
         <hr>
     </div>
 
-    
 
-    
+
+
 </div>
 
 {% endblock %}
 
 {% block script %}
 <script>
+
     function addBtnOnclick(){
         document.getElementById("addPanel").style.display = "block";
     }
@@ -86,17 +87,29 @@
 
 
     // }
+    window.onload=function calculate(){
+        var arr_total_efforts=document.getElementsByClassName("initEsti circle");
+        var arr_remaining_efforts=document.getElementsByClassName("remainEsti circle");
+        var total_efforts=0;
+        var remaining_efforts=0;
 
-    function calculate(){
-        
-    }
+        for(var i=0;i<arr_total_efforts.length-1;i++){
+            total_efforts+=parseInt(arr_total_efforts[i].innerText);
+            remaining_efforts+=parseInt(arr_remaining_efforts[i].innerText);
+        }
+        var burndown_efforts=total_efforts-remaining_efforts;
+        document.getElementById("total_efforts").innerText=total_efforts.toString();
+        document.getElementById("completionrate").innerText=burndown_efforts.toString()+"/"+total_efforts.toString();
+        document.getElementById("remaining_efforts").innerText=remaining_efforts.toString();
+        document.getElementById("Status").innerText=remaining_efforts===0?"Complete":"In progress";
+    };
 
     function resetform(){
         document.getElementById("iee").value = "";
         document.getElementById("ree").value = "";
         document.getElementById("subname").value = "";
         document.getElementById("dropdown").selectedIndex = 0;
-        
+
     }
 
     function cancelBtnOnclick(){
@@ -112,19 +125,19 @@
                 }else{
                     ev.target.parentElement.children[i].style.display="none";
                 }
-                
+
             }
         }
         ev.target.parentElement.childNodes[0].style.display="block";
     }
 
     function taskInvolveBtnOnClick(ev){
-        var xmlhttp = new XMLHttpRequest();    
-    
-            xmlhttp.onreadystatechange = function(){	
+        var xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function(){
             if (xmlhttp.readyState == 4  && xmlhttp.status ==200){
-              
-              
+
+
             }
         ev.target.style.display="none";
     }
@@ -144,7 +157,7 @@
         width:1380px;
         height: auto;
         margin-left: 20px;
-        margin-top: 10px; 
+        margin-top: 10px;
     }
 
     #PBI_ID{
@@ -154,7 +167,7 @@
         font-size: 20px;
         padding-left:10px;
         margin-top:10px;
-        margin-bottom: 30px; 
+        margin-bottom: 30px;
         line-height: 50px;
         border: 1px black solid;
         font-weight: bold;
@@ -167,7 +180,7 @@
         font-size: 20px;
         padding-left:10px;
         margin-top:10px;
-        margin-bottom: 30px; 
+        margin-bottom: 30px;
         line-height: 50px;
         border: 1px black solid;
         font-weight: bold;
@@ -199,12 +212,12 @@
         font-size: 20px;
         float: right;
         margin:10px;
-        margin-right:30px; 
-        padding-left:10px; 
+        margin-right:30px;
+        padding-left:10px;
         width: 200px;
         height: 30px;
         border: 1px black solid;
-        
+
     }
 
     #subTaskList{
@@ -247,28 +260,28 @@
         float:left;
         border: 1px black solid;
         margin-left: 10px;
-        margin-bottom: 10px; 
+        margin-bottom: 10px;
         padding-left: 5px;
-        padding-right: 5px; 
+        padding-right: 5px;
         font-size: 20px;
         line-height: 20px;
         background-color:rgb(148, 73, 63);
     }
 
     ul{
-        padding-inline-start: 0px; 
+        padding-inline-start: 0px;
     }
 
     li{
-        margin-left:10px; 
+        margin-left:10px;
         list-style:none;
-        
+
     }
 
     ul li div{
         margin-left: 5px;
         margin-right:10px;
-        margin-bottom: 15px; 
+        margin-bottom: 15px;
     }
 
     li .remainEsti{
@@ -304,7 +317,7 @@
         height: 30px;
         background-color:rgb(148, 73, 63);
         border:none;
-        margin-left: 0px; 
+        margin-left: 0px;
     }
 
     .formBtn{
