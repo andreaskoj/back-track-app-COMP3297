@@ -5,13 +5,14 @@
         <!-- <div id="createBtn" onclick="createBtnOnclick()"><p>Create New Sprint</p></div> -->
         
         <div id="creating" style="display: block;">
-            <form></form>
+            <form id="form" action="createspri/" method="post" onsubmit="formsubmit()">
+                    {% csrf_token %}
             <div class="title">Create Sprint</div>
 
             <div id="notselected" class="thediv">
                 <div class="title">Product Backlog</div>
                 {% for pbi in pbi_list %}
-                <div class="pbi" onclick="pbiselected(event)">PBI {{pbi.id}}
+                <div class="pbi" onclick="pbiselected(event)" id="{{pbi.id}}">PBI {{pbi.id}}
                     <span class="initEsti circle" style="float:right;">
                             {{pbi.estimated_efforts }}
                     </span>
@@ -25,13 +26,15 @@
 
             </div>
 
-            <div class="thediv">
-                <div>Total Effort Avaliable: <input type="text" name="totalEf"></div>
-                <div>Accumulated Effort time of PBIs:<p id="Accumulated"> </p></div>
-                <div>Remained Effort Time:<p id="remained"> </p></div>
-
+            <div class="thediv right" onload="update()">
+                <input id="total" type="hidden" name="totalEf" >
+                <input id="remain" type="hidden" name="remainEf" >
+                <div>Total Effort Avaliable: <input id="ini" type="text" name="initialEf" value="30"></div>
+                <div>Accumulated Effort time of PBIs:<p id="Accumulated"> 0</p></div>
+                <div>Remained Effort Time:<p id="remained"> 30</p></div>
+                <input type="submit" value="Confirm" id="confirmBtn" >
             </div>
-
+            
         </form>
         </div>
 </div>
@@ -39,20 +42,59 @@
 
 {% block script %}
 <script>
-    var pbiSelIds = [];
+        var remain =30;
         function createBtnOnclick(){
             document.getElementById("createBtn").style.display = "none";
             document.getElementById("creating").style.display = "block";
         }
 
         function pbiselected(ev){
+            
             var cla = "selected";
             if(ev.target.classList.contains(cla)){
                 ev.target.classList.remove(cla);
             }else{
+                if(parseInt(ev.target.children[0].innerHTML)> remain){
+                return;
+            }
                 ev.target.classList.add(cla);
             }
+            update();
         }
+
+        function update(){
+            var selectedPBIS = document.getElementsByClassName("selected");
+            var ini = parseInt(document.getElementById("ini").value);
+            var acc = 0;
+            for(i = 0; i < selectedPBIS.length; ++i){
+                acc += parseInt(selectedPBIS[i].children[0].innerHTML);
+            }
+
+            remain = parseInt(ini) - parseInt(acc);
+            document.getElementById("Accumulated").innerHTML = acc;
+            document.getElementById("total").value = acc;
+            document.getElementById("remained").innerHTML = remain;
+            document.getElementById("remain").value = remain;
+
+
+
+        }
+
+        function formsubmit(){
+            event.preventDefault();
+            update();
+            var selectedPBIS = document.getElementsByClassName("selected");
+            var form = document.getElementById("form");
+            for(i = 0; i < selectedPBIS.length; ++i){
+                var ele = document.createElement("input");
+                ele.type = "hidden"
+                ele.name = "pbis[]"
+                ele.value = selectedPBIS[i].id;
+                form.append(ele);
+            }
+            form.submit();
+        }
+
     </script>
 {% endblock %}
 
@@ -75,9 +117,32 @@
     .thediv{
         float:left;
         margin-left:250px;
-        width: 600px;
+        width: 400px;
         height: 600px;
     }
+
+    .right{
+        margin-left:100px;
+        padding-left:50px;
+        padding-top:50px;
+    }
+
+    .right div{
+
+        height: 50px;
+        margin-top:15px;
+        margin-bottom:15px;
+    }
+
+    .right p{
+        width:20px;
+    }
+
+    #confirmBtn{
+        margin-top:30px;
+    }
+
+
 
     #nav-bar tr td:nth-child(4) {
     background-color: lightblue;
@@ -92,6 +157,8 @@
         margin-bottom: 20px;
         background: rgb(85, 189, 128);
     }
+
+    
 
     .circle{
         height: 25px;

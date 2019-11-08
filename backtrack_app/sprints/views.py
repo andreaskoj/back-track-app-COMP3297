@@ -44,4 +44,18 @@ def addSubtask(request):
              pbi =pbi
             )
     #return render(request, 'pbi_list.html')
-    return redirect('http://127.0.0.1:8000/sprints/pbi1')
+    return redirect('http://127.0.0.1:8000/sprints/pbi'+str(request.POST['pbiID']))
+
+def createSprint(request):
+    initialEf = str(request.POST['initialEf'])
+    remainEf = str(request.POST['remainEf'])
+    totalEf = str(request.POST['totalEf'])
+    sprint = SprintBacklog.objects.create(initialEf = initialEf, 
+             remainEf = remainEf, totalEf = totalEf, number=1
+            )
+    pbis = request.POST.getlist('pbis[]')
+    for idx in pbis:
+        PBI.objects.filter(id=idx).update(sprint =sprint)
+
+    #return render(request, 'pbi_list.html')
+    return redirect('http://127.0.0.1:8000/sprints')

@@ -21,7 +21,7 @@
         <div class="column" style="flex: 50%;margin-top: 10px">
             {% for task in task_list %}
             <div class="card" style="margin-bottom:8px;background-color: white;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);margin-right: 30px">
-                <a href="pbi{{pbi.id}}">
+                <a href="pbi{{task.pbi.id}}">
                 <div class="cardcontainer" style="padding: 2px 10px;">
                 <div><b>PBI {{task.pbi.id}}</b></div>
                 <div class="cardStatus">{{task.status}}</div>
