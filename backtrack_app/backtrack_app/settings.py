@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'productBacklog.apps.ProductbacklogConfig',
     'projectManage.apps.ProjectmanageConfig',
+    'task.apps.TaskConfig',
     'sprints.apps.SprintsConfig',
     'login.apps.LoginConfig',
     'django.contrib.admin',

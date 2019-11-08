@@ -3,6 +3,5 @@ from django.urls import include, path
 from . import views
 
 urlpatterns = [
-    path('',views.SprintsManagement.as_view(), name='sprints'),
-
+    path('<int: pbi>',views.TaskManagement.as_view(), name='tasks'),
 ]
