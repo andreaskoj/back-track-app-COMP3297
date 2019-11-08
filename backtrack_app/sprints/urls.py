@@ -4,6 +4,6 @@ from . import views
 
 urlpatterns = [
     path('',views.SprintsManagement.as_view(), name='sprints'),
-    path('sprintBacklog',views.SprintBackLogsManagement.as_view(), name='sprintBacklogs'),
+    path('pbi<int:pbi>',views.SprintBackLogsManagement.as_view(), name='sprintBacklogs'),
 
 ]
