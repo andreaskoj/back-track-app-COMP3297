@@ -32,6 +32,11 @@ class SprintCreate(TemplateView):
         context['pbi_list']=PBI.objects.all()
         return context
 
+# def updateStatus(request):
+#     pbi_status=str(request.POST['dropdown_status'])
+#     PBI.objects.filter(pk=str(request.POST['pbiID'])).update(status=pbi_status)
+#     # return redirect('http://127.0.0.1:8000/sprints')
+
 
 def addSubtask(request):
     initialEstimatedEffort = str(request.POST['initialEstimatedEffort'])
