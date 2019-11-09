@@ -3,7 +3,8 @@
 
 <div id="outside">
     <div id="PBI_ID">PBI-ID {{pbi.id}}</div>
-    <div id="Status">Status</div>
+    <div id="Status">
+    </div>
     <div id="PBI_Desc">
         <div class="title">PBI Description </div>
         
@@ -102,6 +103,8 @@
         document.getElementById("completionrate").innerText=burndown_efforts.toString()+"/"+total_efforts.toString();
         document.getElementById("remaining_efforts").innerText=remaining_efforts.toString();
         document.getElementById("Status").innerText=remaining_efforts===0?"Complete":"In progress";
+
+
     };
 
     function resetform(){
