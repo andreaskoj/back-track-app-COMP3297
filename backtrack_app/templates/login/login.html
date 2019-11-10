@@ -1,0 +1,25 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'login/style.css' %}">
+    <title>{% block title %}BackTrack{% endblock %}</title>
+</head>
+
+<body>
+    <div id="loginBox">
+        <h1> BackTrack</h1>
+
+        <form action="/login/" method="post">
+            {% csrf_token %}
+                    {% for field in form %}
+                        <div class="field">
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+        <input id="button-submit" type="submit" value="Login">
+    </form>
+    </div>
+</body>
+</html>

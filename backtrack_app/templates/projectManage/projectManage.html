@@ -15,9 +15,10 @@
                     </div>
             </div>
         </td>
+
         <td><b><a href="/productBacklog">Product Backlog </a></b></td>
         <td><b><a href="/sprints">Sprint</a></b></td>
-        <td><img id="humanIcon" src="{% static 'projectManage/humanIcon.png' %}"></td>
+        <td><a href="{% url 'logout' %}?next=/login"><img id="humanIcon" src="{% static 'projectManage/humanIcon.png' %}"></a></td>
     </tr>
 </table>
 

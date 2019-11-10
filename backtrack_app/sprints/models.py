@@ -20,8 +20,6 @@ class Developer(models.Model):
     def __str__(self):
         return self.user.username
 
-
-
 class BurndownChart(models.Model):
     estimated_efforts = models.IntegerField()
     remaining_efforts = models.IntegerField()
@@ -40,6 +38,7 @@ class SprintBacklog(models.Model):
     remainEf = models.IntegerField(default=10)
     id=models.AutoField(primary_key=True)
     # burndown = models.OneToOneField(BurndownChart, on_delete=models.CASCADE)
+
     def __str__(self):
         return str(self.number)
 

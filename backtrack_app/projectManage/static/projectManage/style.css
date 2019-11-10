@@ -59,7 +59,6 @@ a{
 .dropdown-content a{
     display: block;
 }
-
 .dropdown:hover .dropdown-content {
     display: block;
     background-color: lightgray;
