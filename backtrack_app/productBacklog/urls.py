@@ -3,5 +3,5 @@ from django.urls import include, path
 from productBacklog import views
 
 urlpatterns = [
-    path('',views.ProductBacklogManagement.as_view(), name='productBacklog'),
+    path('', views.ProductBacklogManagement.as_view(), name='productBacklog'),
 ]
