@@ -27,7 +27,7 @@ def detail(request):
             return render(request, 'projectManage/manager_main.html')
 
         else:
-            print("This user dont belong to any group")
+            return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
 
 
 class ProjectManageManagement(TemplateView):
