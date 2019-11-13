@@ -13,7 +13,7 @@
         <td><b><a href="/projectManage">Project name </a></b></td>
         <td><b><a href="/productBacklog">Product Backlog</a></b></td>
         <td><b><a href="/sprints">Sprint</a></b></td>
-        <td><a href="{% url 'logout' %}?next=/login"><img id="humanIcon" src="{% static 'projectManage/humanIcon.png' %}"></a></td>
+        <td><a href="{% url 'logout' %}?next=/login"><img id="humanIcon" src="{% static 'projectManage/logout.svg' %}"></a></td>
     </tr>
 </table>
 {% block content %}{% endblock %}
@@ -21,5 +21,4 @@
 </body>
 {% block script %}{% endblock %}
 
-{% block style %}{% endblock %}
 </html>

@@ -24,8 +24,9 @@ def auth(request):
                 return render(request, 'projectManage/po_main.html')
             else:
                 if user.project is None:
-                    print("no projects")
-                return render(request, 'projectManage/developer_main.html')
+                    return render(request, 'projectManage/developer_main.html', {'withoutProjects': True, 'base': 'projectManage/base.html'})
+                else:
+                    return render(request, 'projectManage/developer_main.html', {'base': 'base_template.html'})
         elif ScrumMaster.objects.filter(user__username=username).exists():
             return render(request, 'projectManage/manager_main.html')
 

@@ -1,0 +1,15 @@
+{%load static from staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+<table id="nav-bar">
+    <tr>
+        <td><b>BackTrack</b></td>
+
+        <td><img id="humanIcon" src="{% static 'projectManage/logout.svg' %}"></td>
+    </tr>
+</table>
+
+{% block content %}{% endblock %}
+
+{% block script %}{% endblock %}
+
+{% block style%}{% endblock %}

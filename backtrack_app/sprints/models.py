@@ -21,7 +21,7 @@ class Project(models.Model):
 class Developer(models.Model):
     user = models.OneToOneField(User, related_name="Developer", on_delete=models.CASCADE)
     isProductOwner = models.BooleanField(null=True, default=False)
-    project = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True)
+    project = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.user.username
