@@ -1,29 +1,32 @@
 from django.conf import settings
-from django.contrib.auth import logout
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
+from sprints.models import Developer, ScrumMaster
 
 
 def is_member(user):
     return user.groups.filter(name='developer').exists()
 
 
-def detail(request):
-    # checking if the user is authenticated
-    print(is_member(request.user))
+def auth(request):
 
-    if not request.user.is_authenticated:
-        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
-    else:
-        if request.user.groups.filter(name='developer').exists():
-            return render(request, 'projectManage/developer_main.html')
+    if request.user.is_authenticated:
 
-        elif request.user.groups.filter(name='product_owner').exists():
-            return render(request, 'projectManage/po_main.html')
+        # get logged in username
+        username = request.user.username
 
-        elif request.user.groups.filter(name='manager').exists():
+        if Developer.objects.filter(user__username=username).exists():
+            user = Developer.objects.get(user__username=username)
+            if user.isProductOwner:
+                return render(request, 'projectManage/po_main.html')
+            else:
+                if user.project is None:
+                    print("no projects")
+                return render(request, 'projectManage/developer_main.html')
+        elif ScrumMaster.objects.filter(user__username=username).exists():
             return render(request, 'projectManage/manager_main.html')
 
         else:
