@@ -29,7 +29,7 @@
             <div class="thediv right" onload="update()">
                 <input id="total" type="hidden" name="totalEf" >
                 <input id="remain" type="hidden" name="remainEf" >
-                <div>Total Effort Avaliable: <input id="ini" type="text" name="initialEf" value="30"></div>
+                <div>Total Effort Avaliable: <input id="ini" type="text" name="initialEf" value="30" onblur="update()"></div>
                 <div>Accumulated Effort time of PBIs:<p id="Accumulated"> 0</p></div>
                 <div>Remained Effort Time:<p id="remained"> 30</p></div>
                 <input type="submit" value="Confirm" id="confirmBtn" >
