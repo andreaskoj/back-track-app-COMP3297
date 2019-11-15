@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
-from .models import SprintBacklog, PBI, Task, SubTask
+from .models import *
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -65,9 +66,20 @@ def createSprint(request):
     #return render(request, 'pbi_list.html')
     return redirect('http://127.0.0.1:8000/sprints')
 
-# def managePpl(request):
-#     idx = str(request.POST['id'])
-#     ppl = SubTask.objects.get(id=idx)
+def managePpl(request):
+    idx = int(request.POST['id'])
+    userId = int(request.POST['userId'])
+    t =  str(request.POST['type'])
+    subtask = SubTask.objects.get(id=idx)
+    if t == "Join":
+        subtask.Developers.add(Developer.objects.get(user=(User.objects.get(id=userId))))
+    else:
+        subtask.Developers.get(user=(User.objects.get(id=userId))).delete()
+
+    
+    return redirect('http://127.0.0.1:8000/sprints/pbi'+str(request.POST['pbiID']))
+    
+
 
 
 

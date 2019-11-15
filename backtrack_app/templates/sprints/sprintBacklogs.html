@@ -23,13 +23,14 @@
                 <span class="remainEsti circle"style="float:left; text-align: center" > <span style="margin-left:5px;">{{subtask.remaining_efforts}}</span></span>
                 <div style="float:left;">{{subtask.title}}</div>
                 
-                <div class="rightofsubtask" style="float:right; margin:0px;" rel="{{subtask.id}}">
+                <div class="rightofsubtask" style="float:right; margin:0px;" >
                     {% for developer in subtask.Developers.all%}
                     <div class="developerName" style="float:left;">{{developer}}</div>
                     {%endfor%}
                     <div  style="float:left;">
                         <div class="circle" onclick="pplBtnOnClick(event)"></div>
-                        <div class="taskInvoleBtn" onclick="taskInvolveBtnOnClick(event)">{%if user in subtask.Developers%}Quit{%else%}Join{%endif%}</div>
+                        {% csrf_token %}
+                        <div class="taskInvoleBtn" onclick="taskInvolveBtnOnClick(event)" rel="{{subtask.id}}">{%if user.id in subtask.Developers.all.user.id%}Quit{%else%}Join{%endif%}</div>
                     </div>
                     <div style="width:30px; float: right;">{{subtask.status}}</div>
                 </div>
@@ -41,7 +42,7 @@
         <div>
             <div id="addBtn" onclick="addBtnOnclick()">+</div>
             <form id="subTaskForm" action="addSubtask/" method="post">
-                <input type="hidden" name="pbiID" value={{pbiID}} />
+                <input id="pbiID" type="hidden" name="pbiID" value={{pbiID}} />
                 <div id="addPanel">
                     {% csrf_token %}
                     <div>Initial Estimated Effort:<input id="iee" type="text" name="initialEstimatedEffort"  ></div>
@@ -138,23 +139,24 @@
 
             }
         }
-        ev.target.parentElement.childNodes[0].style.display="block";
+        //ev.target.parentElement.childNodes[0].style.display="block";
     }
 
     function taskInvolveBtnOnClick(ev){
-
+        var id = ev.target.getAttribute("rel");
+        console.log(id);
+        var userId = "{{user.id}}";
+        var type = ev.target.innerText;
+        var pbiId = parseInt(document.getElementById("pbiID").value);
         var xmlhttp = new XMLHttpRequest();
+        var csrfmiddlewaretoken = "{{csrf_token}}";
 
-        xmlhttp.onreadystatechange = function(){
-            if (xmlhttp.readyState == 4  && xmlhttp.status ==200){
-                
-
-            }
-       
-        }
         ev.target.style.display="none";
-        xmlhttp.open("POST","managePpl?type="+mailbox+"&page_index="+page_index, true);
-        xmlhttp.send();
+        
+        xmlhttp.open("POST","managePpl/",true);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send("id="+id+"&type="+type+"&userId="+userId+"&pbiID="+pbiId+"&csrfmiddlewaretoken="+csrfmiddlewaretoken);
+
     }
 
 </script>
