@@ -20,13 +20,18 @@
             {% for subtask in subtask_list %}
             <li>
                 <span class="initEsti circle" style="float:left; text-align: center"> <span style="margin-left:3px;">{{subtask.initialEstimatedEffort}}</span></span>
-                <span class="remainEsti circle"style="float:left;; text-align: center" > <span style="margin-left:5px;">{{subtask.remaining_efforts}}</span></span>
+                <span class="remainEsti circle"style="float:left; text-align: center" > <span style="margin-left:5px;">{{subtask.remaining_efforts}}</span></span>
                 <div style="float:left;">{{subtask.title}}</div>
                 
-                <div style="float:right; ">{{subtask.status}}</div>
-                <div style="float:right;" >
-                    <div class="circle" onclick="pplBtnOnClick(event)"></div>
-                    <div class="taskInvoleBtn" onclick="taskInvolveBtnOnClick(event)">Join</div>
+                <div class="rightofsubtask" style="float:right; margin:0px;" rel="{{subtask.id}}">
+                    {% for developer in subtask.Developers.all%}
+                    <div class="developerName" style="float:left;">{{developer}}</div>
+                    {%endfor%}
+                    <div  style="float:left;">
+                        <div class="circle" onclick="pplBtnOnClick(event)"></div>
+                        <div class="taskInvoleBtn" onclick="taskInvolveBtnOnClick(event)">{%if user in subtask.Developers%}Quit{%else%}Join{%endif%}</div>
+                    </div>
+                    <div style="width:30px; float: right;">{{subtask.status}}</div>
                 </div>
             </li>
             <hr>
@@ -107,6 +112,7 @@
 
     };
 
+
     function resetform(){
         document.getElementById("iee").value = "";
         document.getElementById("ree").value = "";
@@ -119,6 +125,7 @@
         document.getElementById("addPanel").style.display = "none";
         resetform();
     }
+
 
     function pplBtnOnClick(ev){
         for(i = 0; i < ev.target.parentElement.children.length;++i){
@@ -138,13 +145,16 @@
 
         var xmlhttp = new XMLHttpRequest();
 
-            xmlhttp.onreadystatechange = function(){
+        xmlhttp.onreadystatechange = function(){
             if (xmlhttp.readyState == 4  && xmlhttp.status ==200){
-
+                
 
             }
+       
+        }
         ev.target.style.display="none";
-    }
+        xmlhttp.open("POST","managePpl?type="+mailbox+"&page_index="+page_index, true);
+        xmlhttp.send();
     }
 
 </script>
@@ -285,7 +295,8 @@
     ul li div{
         margin-left: 5px;
         margin-right:10px;
-        margin-bottom: 15px;
+        margin-top:7px;
+        margin-bottom: 7px;
     }
 
     li .remainEsti{
@@ -333,6 +344,13 @@
         border: 1px black solid;
         background-color:rgb(148, 73, 63);
 
+    }
+
+    .developerName{
+        float: right;
+        border: 1px black solid;
+        width: 50px;
+        background: lightgrey;
     }
 
     .taskInvoleBtn{

@@ -64,3 +64,10 @@ def createSprint(request):
 
     #return render(request, 'pbi_list.html')
     return redirect('http://127.0.0.1:8000/sprints')
+
+# def managePpl(request):
+#     idx = str(request.POST['id'])
+#     ppl = SubTask.objects.get(id=idx)
+
+
+
