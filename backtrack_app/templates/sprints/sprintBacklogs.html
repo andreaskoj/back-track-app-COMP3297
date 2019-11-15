@@ -30,7 +30,7 @@
                     <div  style="float:left;">
                         <div class="circle" onclick="pplBtnOnClick(event)"></div>
                         {% csrf_token %}
-                        <div class="taskInvoleBtn" onclick="taskInvolveBtnOnClick(event)" rel="{{subtask.id}}">{%if user.id in subtask.Developers.all.user.id%}Quit{%else%}Join{%endif%}</div>
+                        <div class="taskInvoleBtn" onclick="taskInvolveBtnOnClick(event)" rel="{{subtask.id}}">{%if user.Developer in subtask.Developers.all%}Quit{%else%}Join{%endif%}</div>
                     </div>
                     <div style="width:30px; float: right;">{{subtask.status}}</div>
                 </div>

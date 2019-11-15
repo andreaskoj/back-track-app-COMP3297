@@ -74,9 +74,7 @@ def managePpl(request):
     if t == "Join":
         subtask.Developers.add(Developer.objects.get(user=(User.objects.get(id=userId))))
     else:
-        subtask.Developers.get(user=(User.objects.get(id=userId))).delete()
-
-    
+        subtask.Developers.remove((Developer.objects.get(user=(User.objects.get(id=userId)))))
     return redirect('http://127.0.0.1:8000/sprints/pbi'+str(request.POST['pbiID']))
     
 
