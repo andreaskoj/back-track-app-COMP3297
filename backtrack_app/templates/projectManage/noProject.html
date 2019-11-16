@@ -1,28 +1,53 @@
 {% block content %}
-<div class="panel">
-    <div id="createBtn" onclick="createBtnOnclick()"><p>Create New Project</p></div>
+    <div class="panel">
+{#                <div id="createBtn" onclick="createBtnOnclick()"><p>Create New Project</p></div>#}
+        <div class="formWrapper">
+            <a href="/projectManage/create_project/"><h1>CLICK</h1></a>
 
-    <ul id="createList">
-            <!-- <form action="/project-name/" method="post">
-                <label for="your_name">Your name: </label>
-                <input id="your_name" type="text" name="your_name" value="{{ current_name }}">
-                <input type="submit" value="OK">
-            </form> -->
-        <li><h2>Create a new Project</h2></li>
-        <li><p>Project name:</p></li>
-        <li><p>Invite Members:</p></li>
-        <li><p>Manager:</p></li>
-        <li><p>Developer:</p></li>
-        <li><div id= "submitBtn">Submit</div></li>
-    
-    
-    </ul>
-</div>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+            <input type="submit" value="Submit">
+            </form>
+{#            <form id="createProjectForm" action="/" method="post">#}
+{#                <h2>Create new project:</h2>#}
+{##}
+{#                <label for="projectName">Project name:</label>#}
+{#                <br>#}
+{#                <input id="projectName" type="text" name="name">#}
+{#                <br>#}
+{#                <h3>Add team members:</h3>#}
+{##}
+{#                <label for="manager">Manager:</label>#}
+{#                <br>#}
+{#                <select id="manager"name="manager">#}
+{#                <option value="volvo">m1</option>#}
+{#                <option value="saab">m2</option>#}
+{#                <option value="fiat">m3</option>#}
+{#                <option value="audi">m4</option>#}
+{#                </select>#}
+{#                <br>#}
+{#                <br>#}
+{#                <label for="developers">Developers</label>#}
+{#                <br>#}
+{#                <select id="developers"name="manager">#}
+{#                <option value="volvo">Volvo</option>#}
+{#                <option value="saab">Saab</option>#}
+{#                <option value="fiat">Fiat</option>#}
+{#                <option value="audi">Audi</option>#}
+{#                </select>#}
+{##}
+{#                <br>#}
+{#                <br >#}
+{#                <input type="submit" value="Create">#}
+{#            </form>#}
+        </div>
+    </div>
 {% endblock %}
 
 {% block script %}
     <script>
-        function createBtnOnclick(){
+        function createBtnOnclick() {
             document.getElementById("createBtn").style.display = "none";
             document.getElementById("createList").style.display = "block";
         }
@@ -30,49 +55,61 @@
 
 {% endblock %}
 
-
 {% block style %}
     <style>
-    #nav-bar tr td:nth-child(2) {
-    /*project*/
-    width: 180px;
-    }
+        .panel {
+            text-align:center
+        }
 
-    #createList{
-    list-style-type:none; 
-    margin-left: 550px;
-    margin-top:50px;
-    display:none;
-    }
+        .formWrapper {
+            border: 1px solid black;
+            padding: 20px;
+            background: #d5d5d5;
+            margin-top: 50px;
+            display: inline-block;
+            text-align: left;
+        }
 
-    #createList li{
-        margin-top:30px;
+        #createList {
+            background: #79aec8;
+            width: 500px;
+            list-style-type: none;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 50px;
+            padding: 50px;
+            display: block;
+        }
 
-    }
+        h1 {
+            margin-top: 0px;
+        }
 
-    #submitBtn{ 
-        border: 1px solid black; 
-        width: 100px;
-        padding-left: 10px;
-        background-color:rgb(148, 73, 63);
-    }
+        #createList li {
+            margin-top: 30px;
 
+        }
 
+        #submitBtn {
+            border: 1px solid black;
+            width: 100px;
 
+            background-color: rgb(148, 73, 63);
+        }
 
-    #createBtn{
-        margin-top: 255px;
-        margin-left: auto;
-        margin-right:auto;
-        background-color:rgb(148, 73, 63);
-        width: 200px;
-        padding-top: 10px; 
-        padding-left: 10px; 
-        font-size: 20px;
-        line-height: 20px;
-        height: 40px;
-        border: 1px solid black;
-    }
+        #createBtn {
+            margin-top: 255px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: rgb(148, 73, 63);
+            width: 200px;
+            padding-top: 10px;
+            padding-left: 10px;
+            font-size: 20px;
+            line-height: 20px;
+            height: 40px;
+            border: 1px solid black;
+        }
 
     </style>
 

@@ -1,4 +1,12 @@
 {% extends "base_template.html" %}
+{#{% block content %}#}
+{#<h1> I'm po</h1>#}
+{#{% endblock %}#}
+
 {% block content %}
-<h1> I'm po</h1>
+    <h2>New post</h2>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
 {% endblock %}
