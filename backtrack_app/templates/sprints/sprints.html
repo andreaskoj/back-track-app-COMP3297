@@ -5,13 +5,15 @@
 
     <div class="row">
         <h1 style="text-align: left;margin-left: 20px;margin-top:40px">Sprint Backlog Overview</h1></div>
-    <div class="row"><h2 style="text-align: left;margin: 20px">Sprint {{sprint}}</h2></div>
+    <div class="row"><h2 style="text-align: left;margin: 20px">Sprint {{sprint.id}}</h2></div>
     <div class="row" style="display: flex;">
         <div class="column" style="flex: 70%; margin-top: 10px">
             <div id="SprintInfo">
                 <div style="font-size:20px;"><b >Sprint Information</b></div>
-                <form name="description_of_sprint" method="post">
-                <textarea style="margin-left:30px; font-size: 20px;" rows="10" cols="73" title="description" >Description of the current sprint</textarea>
+                <form name="description_of_sprint" method="POST">
+                    {%csrf_token%}
+                    <p><textarea name="information_of_sprint" style="margin-left:30px; font-size: 20px;" rows="10" cols="73" title="description" >{{sprint.information}}</textarea></p>
+                    <p style="text-align: right; padding-right: 10px"><input type="submit" value="SAVE"></p>
                 </form>
                 <div>Total Efforts: {{sprint.totalEf}} hrs </div>
                 <div>Initial Efforts: {{sprint.initialEf}} hrs </div>
@@ -28,7 +30,6 @@
                 <div>Description: {{task.pbi.description}}</div>
                 <div>Total Effort: {{task.totalEf}} </div>
                 <div>Remaining Effort: {{task.remainEf}}</div>
-                
                 </div>
                 </a>
 
