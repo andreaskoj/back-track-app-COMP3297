@@ -2,17 +2,34 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from .models import *
 from django.contrib.auth.models import User
+import json
 
 
-# Create your views here.
-class SprintsManagement(TemplateView):
-    template_name = "sprints/sprints.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['task_list'] = Task.objects.all()
-        context['sprint'] = SprintBacklog.objects.get(pk=1)
-        return context
+def SprintManagement(request):
+    sprint = SprintBacklog.objects.get(pk=1)
+    if request.GET.get("DeleteButton"):
+        task=Task.objects.get(pk=int(request.GET.get('DeleteButton')))
+        remainingEfforts=task.remainEf
+        pbi_id=task.pbi.id
+        task.delete()
+        pbi=PBI.objects.get(pk=pbi_id)
+        if int(remainingEfforts) > 0:
+            pbi.status="NS"
+        else:
+            pbi.status="F"
+        pbi.save()
+    tasks=Task.objects.all()
+    for i in tasks:
+        pbi_index=i.pbi.id
+        pbi_update=PBI.objects.get(pk=pbi_index)
+        pbi_update.status="IP"
+        pbi_update.save()
+    if request.method=="POST":
+        info=request.POST.get('information_of_sprint',False)
+        sprint.information=info
+        sprint.save()
+        # pbi_id=request.POST.get()
+    return render(request,'sprints/sprints.html',{'task_list':tasks,'sprint':sprint})
 
 
 class SprintBackLogsManagement(TemplateView):
@@ -33,10 +50,11 @@ class SprintCreate(TemplateView):
         context['pbi_list']=PBI.objects.all()
         return context
 
-# def updateStatus(request):
-#     pbi_status=str(request.POST['dropdown_status'])
-#     PBI.objects.filter(pk=str(request.POST['pbiID'])).update(status=pbi_status)
-#     # return redirect('http://127.0.0.1:8000/sprints')
+
+def updateStatus(request):
+    pbi_status=str(request.GET['dropdown_status'])
+    PBI.objects.filter(pk=request.GET['pbiID']).update(status=pbi_status)
+    # return redirect('http://127.0.0.1:8000/sprints')
 
 
 def addSubtask(request):
@@ -51,6 +69,7 @@ def addSubtask(request):
             )
     #return render(request, 'pbi_list.html')
     return redirect('http://127.0.0.1:8000/sprints/pbi'+str(request.POST['pbiID']))
+
 
 def createSprint(request):
     initialEf = str(request.POST['initialEf'])
