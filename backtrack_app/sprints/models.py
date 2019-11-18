@@ -56,8 +56,8 @@ class SprintBacklog(models.Model):
 class PBI(models.Model):
     description = models.CharField(max_length=200)
     id = models.AutoField(primary_key=True)
-    STATUS = (('NS', 'Not started'), ('IP', 'In progress'), ('C', 'Complete'))
-    status = models.CharField(max_length=10, choices=STATUS, default='Not started')
+    STATUS = (('NS', 'Not started'), ('IP', 'In progress'), ('C', 'Complete'),('F','Finished'))
+    status = models.CharField(max_length=10, choices=STATUS, default='NS')
     sprint = models.ForeignKey(SprintBacklog, null=True, on_delete=models.SET_NULL)
     estimated_efforts = models.IntegerField(null=True)
     objects = models.Manager()
