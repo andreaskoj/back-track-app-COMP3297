@@ -1,62 +1,22 @@
 {% block content %}
     <div class="panel">
-{#                <div id="createBtn" onclick="createBtnOnclick()"><p>Create New Project</p></div>#}
         <div class="formWrapper">
-            <a href="/projectManage/create_project/"><h1>CLICK</h1></a>
-
-            <form method="post">
+            <form id="form" action="/projectManage/create_project/" method="post">
+                <h1>Create a new project:</h1>
                 {% csrf_token %}
                 {{ form.as_p }}
             <input type="submit" value="Submit">
             </form>
-{#            <form id="createProjectForm" action="/" method="post">#}
-{#                <h2>Create new project:</h2>#}
-{##}
-{#                <label for="projectName">Project name:</label>#}
-{#                <br>#}
-{#                <input id="projectName" type="text" name="name">#}
-{#                <br>#}
-{#                <h3>Add team members:</h3>#}
-{##}
-{#                <label for="manager">Manager:</label>#}
-{#                <br>#}
-{#                <select id="manager"name="manager">#}
-{#                <option value="volvo">m1</option>#}
-{#                <option value="saab">m2</option>#}
-{#                <option value="fiat">m3</option>#}
-{#                <option value="audi">m4</option>#}
-{#                </select>#}
-{#                <br>#}
-{#                <br>#}
-{#                <label for="developers">Developers</label>#}
-{#                <br>#}
-{#                <select id="developers"name="manager">#}
-{#                <option value="volvo">Volvo</option>#}
-{#                <option value="saab">Saab</option>#}
-{#                <option value="fiat">Fiat</option>#}
-{#                <option value="audi">Audi</option>#}
-{#                </select>#}
-{##}
-{#                <br>#}
-{#                <br >#}
-{#                <input type="submit" value="Create">#}
-{#            </form>#}
         </div>
     </div>
 {% endblock %}
 
 {% block script %}
-    <script>
-        function createBtnOnclick() {
-            document.getElementById("createBtn").style.display = "none";
-            document.getElementById("createList").style.display = "block";
-        }
-    </script>
-
 {% endblock %}
 
 {% block style %}
     <style>
+
         .panel {
             text-align:center
         }
@@ -80,6 +40,7 @@
             padding: 50px;
             display: block;
         }
+
 
         h1 {
             margin-top: 0px;

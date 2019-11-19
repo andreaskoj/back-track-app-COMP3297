@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
-from sprints.models import Developer, ScrumMaster
+from sprints.models import Developer, ScrumMaster, Project
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
@@ -29,8 +29,12 @@ def auth(request):
             else:
                 if user.project is None:
                     # Developer - without project
+                    form = CreateProjectForm(user=username)
                     return render(request, 'projectManage/developer_main.html', {'withoutProjects': True,
-                                                                                 'base': 'projectManage/base.html'})
+                                                                                 'base': 'projectMana'
+                                                                                         'ge/base.html',
+                                                                                 'form': form
+                                                                                 })
                 else:
                     # Developer - with project
                     return render(request, 'projectManage/developer_main.html', {'base': 'base_template.html'})
@@ -44,27 +48,28 @@ def auth(request):
 
 
 def create_project(request):
-    # print("TEST")
-    # if this is a POST request we need to process the form data
     if request.method == 'POST':
-        print("TEST")
-        # create a form instance and populate it with data from the request:
-        form = CreateProjectForm(request.POST)
-        # check whether it's valid:
+        form = CreateProjectForm(request.POST, user='')
         if form.is_valid():
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
-            return HttpResponseRedirect('/thanks/')
 
-    # if a GET (or any other method) we'll create a blank form
-    else:
-        print("TEST2")
-        form = CreateProjectForm()
+            project_name = form.cleaned_data.pop("project_name")
+            manager = form.cleaned_data.pop("manager")
+            developer = form.cleaned_data.pop("developer")
 
-    return render(request, 'projectManage/developer_main.html', {'withoutProjects': True,
-                                                                 'base': 'projectManage/base.html',
-                                                                 'form': form})
+            new_project = Project(name=project_name)
+            new_project.master = ScrumMaster.objects.get(user__username=manager)
+            new_project.save()
+
+            dev = Developer.objects.get(user__username=developer)
+            dev.project = new_project
+            dev.save()
+
+            po = Developer.objects.get(user__username=request.user.username)
+
+            po.isProductOwner = True
+            po.save()
+
+            return render(request, 'projectManage/developer_main.html', {'base': 'base_template.html'})
 
 
 class ProjectManageManagement(TemplateView):
