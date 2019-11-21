@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Join {{ p_name }}</title>
+</head>
+<body>
+
+<h1>{{ p_name }}</h1>
+<form id="form" action="/projectManage/invitation_form/" method="post">
+    <h1>Create a new project:</h1>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+</form>
+
+
+{#{% debug %}#}
+</body>
+</html>
