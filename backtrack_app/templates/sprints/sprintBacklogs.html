@@ -32,7 +32,13 @@
                         {% csrf_token %}
                         <div class="taskInvoleBtn" onclick="taskInvolveBtnOnClick(event)" rel="{{subtask.id}}">{%if user.Developer in subtask.Developers.all%}Quit{%else%}Join{%endif%}</div>
                     </div>
-                    <div style="width:30px; float: right;">{{subtask.status}}</div>
+                    <div style="width:30px;float: right;">
+                        <div onclick="substatOnclick(event)" rel="{{subtask.id}}">{{subtask.status}}</div>
+                        <div style="width:30px; float: right; overflow : auto;" class="mydropdown">
+                        </div>
+                    </div>
+                    <!-- <div style="width:30px; float: right;" onclick="substatOnclick(event)" rel="{{subtask.id}}">{{subtask.status}}</div> -->
+                        
                 </div>
             </li>
             <hr>
@@ -48,13 +54,14 @@
                     <div>Initial Estimated Effort:<input id="iee" type="text" name="initialEstimatedEffort"  ></div>
                     <div>Remained Estimated Effort:<input id="ree" type="text" name="remaining_efforts"  ></div>
                     <div>Task Name:<input id="subname" type="text" name="title" ></div>
-                    <div>Status:
+                    <input type="hidden" name="status" value="NS" />
+                    <!-- <div>Status:
                         <select id="statusInput" name="status">
                             <option value="NS">Not started</option>
                             <option value="IP">In progress</option>
                             <option value="C">Complete</option>
                           </select>
-                    </div>
+                    </div> -->
                     <div id="okBtn" class="formBtn"><input type="Submit" value="Ok" id="ok"></div>
                     <div id="cancelBtn" class="formBtn" onclick="cancelBtnOnclick()">Cancel</div>
                 </div>
@@ -79,6 +86,7 @@
 {% block script %}
 <script>
 
+
     function addBtnOnclick(){
         document.getElementById("addPanel").style.display = "block";
     }
@@ -94,6 +102,48 @@
 
 
     // }
+
+    function substatOnclick(ev){
+        var dropdown = ev.target.parentElement.children[1];
+        if (dropdown.children.length!=0) {
+            dropdown.innerHTML="";
+            return;
+        }
+
+        
+        var statusList = ["IP","C"];
+        for (i = 0; i < statusList.length; ++i){
+            if (statusList[i] != ev.target.innerText){
+                var ele = document.createElement("div");
+                ele.className = "statusOpt";
+                ele.innerHTML = statusList[i];
+                ele.onclick=function(){
+                    changeSubTask(event);
+                }
+                ele.setAttribute("rel", ev.target.getAttribute("rel"));
+                console.log(ele.getAttribute("rel"));
+                dropdown.appendChild(ele);
+            }
+                       
+        }
+
+    }
+
+    function changeSubTask(ev){
+        var id = ev.target.getAttribute("rel");
+        var status = ev.target.innerText;
+        console.log(id+" "+status);
+        var xmlhttp = new XMLHttpRequest();
+        var csrfmiddlewaretoken = "{{csrf_token}}";
+
+        ev.target.parentElement.innerHTML="";
+        
+        xmlhttp.open("POST","changesubtask/",true);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send("id="+id+"&status="+status+"&csrfmiddlewaretoken="+csrfmiddlewaretoken);
+        location.reload();
+    }
+
     window.onload=function calculate(){
         var arr_total_efforts=document.getElementsByClassName("initEsti circle");
         var arr_remaining_efforts=document.getElementsByClassName("remainEsti circle");
@@ -156,6 +206,7 @@
         xmlhttp.open("POST","managePpl/",true);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.send("id="+id+"&type="+type+"&userId="+userId+"&pbiID="+pbiId+"&csrfmiddlewaretoken="+csrfmiddlewaretoken);
+        location.reload();
 
     }
 
@@ -366,6 +417,18 @@
         line-height: 30px;
         display: none;
 
+    }
+
+    .mydropdown{
+        position: absolute;
+        overflow: auto;
+    }
+
+    .statusOpt{
+        background: lightgrey;
+        width:28px;
+        border: 1px black solid;
+        margin: 0px;
     }
 
 

@@ -10,4 +10,5 @@ urlpatterns = [
       path('createsprint',views.SprintCreate.as_view(), name='createsprints'),
       url(r'^createspri/$',views.createSprint, name = 'createSprint'),
       url(r'^managePpl/$',views.managePpl, name = 'managePpl'),
+      url(r'^changesubtask/$',views.changesubtask, name = 'changesubtask'),
 ]
