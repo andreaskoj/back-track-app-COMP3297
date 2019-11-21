@@ -32,7 +32,7 @@ def auth(request):
                 if user.project is None:
                     # Developer - without project
                     form = CreateProjectForm(user=username)
-                    send_html_mail(address='kojandreas@gmail.com', project_name="Project1")
+                    # send_html_mail(address='kojandreas@gmail.com', project_name="Project1")
                     return render(request, 'projectManage/developer_main.html', {'withoutProjects': True,
                                                                                  'base': 'projectMana'
                                                                                          'ge/base.html',
