@@ -6,10 +6,12 @@ import json
 
 
 def SprintManagement(request):
-    sprint = SprintBacklog.objects.get(pk=1)
+    if SprintBacklog.objects.count() == 0:
+    	return redirect('http://127.0.0.1:8000/sprints/createsprint')
+    sprint = SprintBacklog.objects.get(number=1)
     if request.GET.get("DeleteButton"):
         task=Task.objects.get(pk=int(request.GET.get('DeleteButton')))
-        remainingEfforts=task.remainEf
+        remainingEfforts=task.pbi.remainStory
         pbi_id=task.pbi.id
         task.delete()
         pbi=PBI.objects.get(pk=pbi_id)
@@ -76,11 +78,12 @@ def createSprint(request):
     remainEf = str(request.POST['remainEf'])
     totalEf = str(request.POST['totalEf'])
     sprint = SprintBacklog.objects.create(initialEf = initialEf, 
-             remainEf = remainEf, totalEf = totalEf, number=1
+             remainEf = totalEf, totalEf = totalEf, number=1
             )
     pbis = request.POST.getlist('pbis[]')
     for idx in pbis:
         PBI.objects.filter(id=idx).update(sprint =sprint)
+        Task.objects.create(pbi = PBI.objects.get(id=idx))
 
     #return render(request, 'pbi_list.html')
     return redirect('http://127.0.0.1:8000/sprints')
@@ -98,9 +101,27 @@ def managePpl(request):
         subtask.status = "IP"
         subtask.save()
     return HttpResponse("")
+
+def delsub(request):
+    idx = int(request.POST['id'])
+    SubTask.objects.get(id=idx).delete()
+    return HttpResponse("")
     
 
-
+def delsprint(request):
+    SprintBacklog.objects.all().delete()
+    tasks = Task.objects.all()
+    for task in tasks:
+    	remainingEfforts=task.pbi.remainStory
+    	pbi_id=task.pbi.id
+    	task.delete()
+    	pbi=PBI.objects.get(pk=pbi_id)
+    	if int(remainingEfforts) > 0:
+    		pbi.status="NS"
+    	else:
+    		pbi.status="F"
+    	pbi.save()
+    return redirect('http://127.0.0.1:8000/sprints')
 
 def changesubtask(request):
     idx = int(request.POST['id'])

@@ -5,21 +5,26 @@
 
     <div class="row">
         <h1 style="text-align: left;margin-left: 20px;margin-top:40px">Sprint Backlog Overview</h1></div>
-    <div class="row"><h2 style="text-align: left;margin: 20px">Sprint {{sprint.id}}</h2></div>
+    <div class="row"><h2 style="text-align: left;margin: 20px">Sprint {{sprint.number}}</h2></div>
     <div class="row" style="display: flex;">
         <div class="column" style="flex: 70%; margin-top: 10px">
             <div id="SprintInfo">
                 <div style="font-size:20px;"><b >Sprint Information</b></div>
                 <div id="initialEf">Available Manpower Efforts: {{sprint.initialEf}} hrs </div>
-                <div >Total Estimated Efforts for Current Sprint: <span id="totalEf"></span> hrs </div>
-                <div>Average Efforts for Each PBI: <span id="averageEf"></span> hrs </div>
-                <div>Remaining Efforts: <span id="remainingEf"></span> hrs </div>
+                <div >Total Estimated Efforts for Current Sprint: <span id="totalEf">{{sprint.totalEf}}</span> hrs </div>
+                <!-- <div>Average Efforts for Each PBI: <span id="averageEf"></span> hrs </div> -->
+                <div>Remaining Efforts: <span id="remainingEf">{{sprint.remainEf}}</span> hrs </div>
                 <div>Burndown Efforts: <span id="burndownEf"></span> hrs </div>
                 <form name="description_of_sprint" method="POST">
                     {%csrf_token%}
                     <p><textarea name="information_of_sprint" style="border-radius:10px;margin-left:30px; font-size: 20px" rows="10" cols="73" title="description" >{{sprint.information}}</textarea></p>
-                    <p style="text-align: right; padding-right: 10px"><button style="background-color: #bbccdd;border: 1px black solid;border-radius: 5px" type="submit">SAVE</button></p>
+                    
+                    <p style="text-align: right; padding-right: 10px; float: right;"><button style="background-color: #bbccdd;border: 1px black solid;border-radius: 5px" type="submit">SAVE</button></p>
                 </form>
+                <form action="delsprint/" method="POST">
+                    {%csrf_token%}
+                    <p style="text-align: right; padding-left: 10px; float: left;"><button style="background-color: #bbccdd;border: 1px black solid;border-radius: 5px" type="submit">DELETE</button></p>
+                 </form>
             </div>
         </div>
         <div class="column" style="flex: 30%;margin-top: 10px">
@@ -54,6 +59,7 @@
 
 {% block script %}
 <script>
+
         $('.DeleteButton').click(function (e) {
             e.stopPropagation();
         });
@@ -170,6 +176,13 @@
         flex: 50%;
         text-align: right;
         float:right;
+    }
+
+    .btn{
+        font-size:12px;
+        border-radius: 5px;
+        border: 0 none; 
+        background-color: #bbccdd;
     }
 
 

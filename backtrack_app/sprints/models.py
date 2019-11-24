@@ -11,6 +11,7 @@ class ScrumMaster(models.Model):
 
 class Project(models.Model):
     name = models.CharField(max_length=200)
+    sprintNumber = models.IntegerField(default=0)
     id = models.AutoField(primary_key=True)
     master = models.ForeignKey(ScrumMaster, on_delete=models.SET_NULL, null=True)
     def __str__(self):
@@ -40,9 +41,9 @@ class SprintBacklog(models.Model):
     number = models.IntegerField()
     objects = models.Manager()
     information=models.CharField(max_length=200, default="Description of the current sprint")
-    totalEf = models.IntegerField(default=10)
+    totalEf = models.IntegerField(default=10,null=True)
     initialEf = models.IntegerField(default=10)
-    remainEf = models.IntegerField(default=10)
+    remainEf = models.IntegerField(default=10,null=True)
     id = models.AutoField(primary_key=True)
     STATUS=(('C','created'),('R','Removed'))
     status=models.CharField(max_length=10,choices=STATUS,default='created')
@@ -60,6 +61,7 @@ class PBI(models.Model):
     status = models.CharField(max_length=10, choices=STATUS, default='NS')
     sprint = models.ForeignKey(SprintBacklog, null=True, on_delete=models.SET_NULL)
     estimated_efforts = models.IntegerField(null=True)
+    remainStory = models.IntegerField(null=True,default=10)
     objects = models.Manager()
 
     # burndown=models.OneToOneField(BurndownChart, on_delete=models.CASCADE)
@@ -68,10 +70,10 @@ class PBI(models.Model):
 
 
 class Task(models.Model):
-    description = models.CharField(max_length=200)
+    # description = models.CharField(max_length=200)
     id = models.AutoField(primary_key=True)
-    totalEf = models.IntegerField(default=10)
-    remainEf = models.IntegerField(default=10)
+    # totalEf = models.IntegerField(default=10)
+    # remainEf = models.IntegerField(default=10)
     pbi = models.ForeignKey(PBI, on_delete=models.CASCADE)
     objects = models.Manager()
 

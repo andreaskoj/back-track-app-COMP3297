@@ -11,4 +11,6 @@ urlpatterns = [
       url(r'^createspri/$',views.createSprint, name = 'createSprint'),
       url(r'^managePpl/$',views.managePpl, name = 'managePpl'),
       url(r'^changesubtask/$',views.changesubtask, name = 'changesubtask'),
+      url(r'^delsub/$',views.delsub, name = 'delsub'),
+      url(r'^delsprint/$',views.delsprint, name = 'delsprint'),
 ]

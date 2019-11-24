@@ -19,6 +19,7 @@
         <ul>
             {% for subtask in subtask_list %}
             <li>
+                <div class="delbtn" onclick="delBtnOnClick(event)" rel="{{subtask.id}}">-</div>
                 <span class="initEsti circle" style="float:left; text-align: center"> <span style="margin-left:3px;">{{subtask.initialEstimatedEffort}}</span></span>
                 <span class="remainEsti circle"style="float:left; text-align: center" > <span style="margin-left:5px;">{{subtask.remaining_efforts}}</span></span>
                 <div style="float:left;">{{subtask.title}}</div>
@@ -210,6 +211,20 @@
 
     }
 
+    function delBtnOnClick(ev){
+        var id = ev.target.getAttribute("rel");
+        var xmlhttp = new XMLHttpRequest();
+        var csrfmiddlewaretoken = "{{csrf_token}}";
+
+        ev.target.style.display="none";
+        
+        xmlhttp.open("POST","delsub/",true);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send("id="+id+"&csrfmiddlewaretoken="+csrfmiddlewaretoken);
+        location.reload();
+
+    }
+
 </script>
 {% endblock %}
 
@@ -332,7 +347,20 @@
         padding-right: 5px;
         font-size: 20px;
         line-height: 20px;
-        background-color:rgb(148, 73, 63);
+        background-color:rgb(189, 27, 6);
+    }
+
+    .delBtn{
+        height:20px;
+        float:left;
+        border: 1px black solid;
+        margin-left: 0px;
+        margin-bottom: 10px;
+        padding-left: 5px;
+        padding-right: 5px;
+        font-size: 20px;
+        line-height: 20px;
+        background-color:rgb(10, 238, 10);
     }
 
     ul{
@@ -357,7 +385,7 @@
     }
 
     #total{
-        margin-left: 10px;
+        margin-left: 45px;
     }
 
     #addPanel{
@@ -383,7 +411,7 @@
     #ok{
         width:100px;
         height: 30px;
-        background-color:rgb(148, 73, 63);
+        background-color:rgb(189, 27, 6);
         border:none;
         margin-left: 0px;
     }
@@ -395,7 +423,7 @@
         height: 30px;
         font-size: 20px;
         border: 1px black solid;
-        background-color:rgb(148, 73, 63);
+        background-color:rgb(189, 27, 6);
 
     }
 
