@@ -21,7 +21,16 @@
             <li>
                 <div class="delbtn" onclick="delBtnOnClick(event)" rel="{{subtask.id}}">-</div>
                 <span class="initEsti circle" style="float:left; text-align: center"> <span style="margin-left:3px;">{{subtask.initialEstimatedEffort}}</span></span>
-                <span class="remainEsti circle"style="float:left; text-align: center" > <span style="margin-left:5px;">{{subtask.remaining_efforts}}</span></span>
+                <span class="remainEsti circle" style="float:left; text-align: center" onclick="remainBtnOnlick(event)"  > 
+                    <span style="margin-left:5px;" >{{subtask.remaining_efforts}}</span>
+                    <form action="changeremain/" method="POST" class="remainform">
+                        {%csrf_token%}
+                        <input type="text" name="remain" size="5" style="float:left;">
+                        <input type="hidden" name="id" value="{{subtask.id}}" >
+                        <input id="pbiID" type="hidden" name="pbiID" value={{pbiID}} />
+                        <button style="font-size:12px;border-radius: 5px;border: 0 none; background-color: #bbccdd" type="submit" >OK</button>
+                    </form>
+                </span>
                 <div style="float:left;">{{subtask.title}}</div>
                 
                 <div class="rightofsubtask" style="float:right; margin:0px;" >
@@ -31,10 +40,10 @@
                     <div  style="float:left;">
                         <div class="circle" onclick="pplBtnOnClick(event)"></div>
                         {% csrf_token %}
-                        <div class="taskInvoleBtn" onclick="taskInvolveBtnOnClick(event)" rel="{{subtask.id}}">{%if user.Developer in subtask.Developers.all%}Quit{%else%}Join{%endif%}</div>
+                        <div class="taskInvoleBtn" onclick="taskInvolveBtnOnClick(event)" rel="{{subtask.id}}" >{%if user.Developer in subtask.Developers.all%}Quit{%else%}Join{%endif%}</div>
                     </div>
                     <div style="width:30px;float: right;">
-                        <div onclick="substatOnclick(event)" rel="{{subtask.id}}">{{subtask.status}}</div>
+                        <div onclick="substatOnclick(event)" rel="{{subtask.id}}" data-init="{{subtask.initialEstimatedEffort}}" data-remain="{{subtask.remaining_efforts}}">{{subtask.status}}</div>
                         <div style="width:30px; float: right; overflow : auto;" class="mydropdown">
                         </div>
                     </div>
@@ -53,7 +62,7 @@
                 <div id="addPanel">
                     {% csrf_token %}
                     <div>Initial Estimated Effort:<input id="iee" type="text" name="initialEstimatedEffort"  ></div>
-                    <div>Remained Estimated Effort:<input id="ree" type="text" name="remaining_efforts"  ></div>
+                    <!-- <div>Remained Estimated Effort:<input id="ree" type="text" name="remaining_efforts"  ></div> -->
                     <div>Task Name:<input id="subname" type="text" name="title" ></div>
                     <input type="hidden" name="status" value="NS" />
                     <!-- <div>Status:
@@ -92,6 +101,12 @@
         document.getElementById("addPanel").style.display = "block";
     }
 
+    function remainBtnOnlick(ev){
+        var remainform = ev.target.parentElement.children[1];
+        if (remainform.style.display == "block") remainform.style.display = "none" ;
+        else remainform.style.display = "block";
+    }
+
     // function formBtnOnclick(){
     //     document.getElementById("addPanel").style.display = "none";
     //     var iee = document.getElementById("iee").value;
@@ -104,6 +119,10 @@
 
     // }
 
+    function addBtnOnclick(ev){
+        ev.target.children[0].style.display = "block";
+    }
+
     function substatOnclick(ev){
         var dropdown = ev.target.parentElement.children[1];
         if (dropdown.children.length!=0) {
@@ -114,6 +133,10 @@
         
         var statusList = ["IP","C"];
         for (i = 0; i < statusList.length; ++i){
+            if(i==1 && ev.target.getAttribute("data-remain")!=0){
+                console.log('1:'+ev.target.getAttribute("data-remain"));
+                break;
+            }
             if (statusList[i] != ev.target.innerText){
                 var ele = document.createElement("div");
                 ele.className = "statusOpt";
@@ -445,6 +468,18 @@
         line-height: 30px;
         display: none;
 
+    }
+
+    .remainform{
+        margin:0px;
+        width:100px;
+        height:30px;
+        position: absolute;
+        overflow: auto;
+        border: 1px black solid;
+        line-height: 30px;
+        display: none;
+        background: white;
     }
 
     .mydropdown{

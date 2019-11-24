@@ -61,12 +61,11 @@ def updateStatus(request):
 
 def addSubtask(request):
     initialEstimatedEffort = str(request.POST['initialEstimatedEffort'])
-    remaining_efforts = str(request.POST['remaining_efforts'])
     title = str(request.POST['title'])
     status = str(request.POST.get('status'))
     pbi = PBI.objects.get(pk=str(request.POST['pbiID']))
     SubTask.objects.create(initialEstimatedEffort = initialEstimatedEffort, 
-             remaining_efforts = remaining_efforts, title = title, status = status, 
+             remaining_efforts = initialEstimatedEffort, title = title, status = status, 
              pbi =pbi
             )
     #return render(request, 'pbi_list.html')
@@ -129,3 +128,9 @@ def changesubtask(request):
     SubTask.objects.filter(id=idx).update(status=status)
     return HttpResponse("")
 
+
+def changeremain(request):
+    idx = int(request.POST['id'])
+    remain =  str(request.POST['remain'])
+    SubTask.objects.filter(id=idx).update(remaining_efforts=remain)
+    return redirect('http://127.0.0.1:8000/sprints/pbi'+str(request.POST['pbiID']))
