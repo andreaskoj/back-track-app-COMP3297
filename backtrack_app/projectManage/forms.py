@@ -10,12 +10,12 @@ class CreateProjectForm(forms.Form):
         #                                     Developer.objects.exclude(user__username=user).exclude(
         #                                         isProductOwner=True).filter(project=None)]
 
-    project_name = forms.CharField(max_length=30)
+    project_name = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'placeholder': 'Project name'}))
     manager = forms.ChoiceField(choices=[(manager, manager) for manager in ScrumMaster.objects.all()])
     # developer = forms.ChoiceField()
-    Developer_1 = forms.EmailField(required=False)
-    Developer_2 = forms.EmailField(required=False)
-    Developer_3 = forms.EmailField(required=False)
+    Developer_1 = forms.EmailField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Email'}))
+    Developer_2 = forms.EmailField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Email'}))
+    Developer_3 = forms.EmailField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Email'}))
 
 
 class JoinProject(forms.Form):

@@ -1,9 +1,11 @@
 {%load static from staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
 <table id="nav-bar">
     <tr>
+
         <td><b>BackTrack</b></td>
-        <<td><a href="{% url 'logout' %}?next=/login"><img id="humanIcon" src="{% static 'projectManage/logout.svg' %}"></a></td>
+        <td><a href="{% url 'logout' %}?next=/login"><img id="humanIcon" src="{% static 'projectManage/logout.svg' %}"></a></td>
     </tr>
 </table>
 

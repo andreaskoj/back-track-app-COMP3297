@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+
+    <!-- css codes included in html file -->
+    <style type="text/css">
+      body {
+        background-color: lightcyan;
+      }
+
+      #bar {
+        width: 100%;
+        background-color: lightgrey;
+      }
+      #bar th {
+        text-align: left;
+      }
+
+      img {
+        display: block;
+      }
+
+      #pagename h1 {
+        text-align: center;
+      }
+
+      #buttons {
+        display: flex;
+        justify-content: center;
+      }
+
+      table {
+        width: 100%;
+        margin-top: 20px;
+        background-color: white;
+      }
+
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+      }
+
+      #addbox {
+        border: 1px solid black;
+        text-align: center;
+        margin-top: 100px;
+        padding: 40px;
+        background-color: white;
+      }
+
+      .triangle-up {
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 20px solid #555;
+        float: left;
+      }
+
+      .triangle-down {
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 20px solid #555;
+        float: right;
+      }
+
+      .form-popup {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+      }
+
+      .form-container {
+        max-width: 300px;
+        padding: 10px 50px;
+        border: 2px solid gray;
+        border-radius: 10px;
+        background-color: #fff;
+      }
+
+      .form-container input[type="text"] {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        border: none;
+        background: #f1f1f1;
+      }
+
+      .selected {
+        background-color: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <table id="bar">
+        <th width="50%">BackTrack</th>
+        <th width="15%">
+          <select>
+            <option value="project_1">Project 1</option>
+            <option value="project_2">Project 2</option>
+          </select>
+        </th>
+        <th width="20%">Product Backlog</th>
+        <th width="15%">Sprint</th>
+        <th width="5%" class="icon"><img src="" width="30px" /></th>
+      </table>
+    </div>
+
+    <div id="pagename">
+      <h1>Product Backlog Items</h1>
+    </div>
+
+
+    <div id="buttons">
+        <form action="/current/" method="get">
+            <button>current view</button>
+        </form>
+
+        <form action="/full/" method="get">
+            <button>full view</button>
+        </form>
+    </div>
+
+
+    {% for pbi in pbi_list %}
+      <div id="tablediv">
+      
+        <table id = "table">
+          <tr>
+            <th>title</th>
+{#            <th>detail</th>#}
+            <th>story point</th>
+            <th>C story points</th>
+            <th>status</th>
+          </tr>
+
+          <tr>
+            <td>{{ pbi.description }} </td>
+{#            <td>{{ pbi.description }}</td>#}
+            <td>{{ pbi.estimated_efforts }}</td>
+            <td>{{ pbi.cumulative_story_point }}</td>
+            <td>{{ pbi.status }}</td>
+
+            {% comment %} <!--up a pbi-->
+            <td>
+              <a href="/del/{{ pbi.id_name }}"><button class="btn btn-danger">Up</button></a>
+            </td>
+            <!--up a pbi-->
+
+            <!--down a pbi-->
+            <td>
+              <a href="/del/{{ pbi.id_name }}"><button class="btn btn-danger">Down</button></a>
+            </td>
+            <!--down a pbi--> {% endcomment %}
+           
+            <!--delete a pbi-->
+            <td>
+              <a href="/del/?sid={{ pbi.id_name }}"><button class="btn btn-danger">Delete</button></a>
+            </td>
+            <!--delete a pbi-->
+            
+            <!--edit a pbi-->
+            <td>
+              <a href="/edit/?sid={{ pbi.id_name }}"><button class="btn btn-primary">Edit</button></a>
+            {% comment %} <button class="btn btn-danger" onclick="openEditForm();return false;">Edit</button></a> {% endcomment %}
+            </td>
+            <!--edit a pbi-->
+
+          </tr>
+        </table>
+      </div>
+    {% empty %}
+      <li>No PBI yet.</li>
+    {% endfor %}
+
+    <div id="addbox" onclick="openAddForm()">
+      +
+    </div>
+
+
+<!-- pop up for inputing -->
+    <div class="form-popup" id="AddForm">
+      <form
+        action="/add/"
+        class="form-container"
+        id="form"
+        method="get"
+      >
+      {% csrf_token %}
+        <h3>Creating new PBI</h3>
+        <br />
+      
+        <label for="title"><b>Title</b></label>
+        <br />
+        <input type="text" placeholder="Enter title" name = "title" required />
+        <br />
+       
+        <label for="detail"><b>Detail</b></label>
+        <br />
+        <textarea name="detail" cols="40" rows="10" wrap="soft" form="form"></textarea>
+        <br />
+
+        <label for="storypoint"><b>Story point</b></label>
+        <br />
+        <input type="text" placeholder="Enter storypoint" name = "story_point" required />
+        <br />
+
+        <button type="submit" class="btn">Submit</button>
+        <br />
+        <button type="button" class="btn cancel" onclick="closeAddForm()">Close</button>
+      </form>
+    </div>
+<!-- pop up for inputing -->
+
+{% comment %} <!-- pop up for inputing -->
+    <div class="form-popup" id="EditForm">
+      <form
+        action="/edit/?sid = {{ pbi.id_name }}"
+        class="form-container"
+        id="form"
+        method="get"
+      >
+      {% csrf_token %}
+        <h3>Editting PBI</h3>
+
+        <br />
+        <label for="PBI ID"><b>ID</b></label>
+        <br />
+        <input type="text" value = "{{ pbi.id_name }}" name = "id_name"/>
+        <br />
+
+        <label for="title"><b>Title</b></label>
+        <br />
+        <input type="text" placeholder="Enter title" name = "title" required />
+        <br />
+       
+        <label for="detail"><b>Detail</b></label>
+        <br />
+        <input type="text" placeholder="Enter detail" name = "detail" required />
+        <br />
+
+        <label for="storypoint"><b>Story point</b></label>
+        <br />
+        <input type="text" placeholder="Enter storypoint" name = "story_point" required />
+        <br />
+
+        <label for="status"><b>Status</b></label>
+        <br />
+        <select name = "status">
+            <option value="Not Started">Not Started</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+            <option value="Cancelled">Cancelled</option>
+        </select>
+        <br />
+
+        <br />
+        <br />
+        
+        <button type="submit" class="btn">Submit</button>
+        <br />
+        <button type="button" class="btn cancel" onclick="closeEditForm()">Close</button>
+      </form>
+    </div>
+<!-- pop up for inputing --> {% endcomment %}
+
+    <script>
+      var table = document.getElementById("table");
+      var r;
+
+      function openAddForm() {
+        document.getElementById("AddForm").style.display = "block";
+      }
+
+      function closeAddForm() {
+        document.getElementById("AddForm").style.display = "none";
+      }
+/*
+      function openEditForm() {
+        document.getElementById("EditForm").style.display = "block";
+      }
+
+      function closeEditForm() {
+        document.getElementById("EditForm").style.display = "none";
+      }
+*/
+      /*var index;
+      function getSelectedRow() {
+        for (var i = 1; i < table.rows.length; i++) {
+          table.rows[i].onclick = function() {
+            if (typeof index != "undefined") {
+              table.rows[index].classList.toggle("selected");
+            }
+
+            index = this.rowIndex;
+            this.classList.toggle("selected");
+          };
+        }
+      }
+
+      getSelectedRow();
+
+      function updown(dir) {
+        var rows = document.getElementById("table").rows,
+          parent = rows[index].parentNode;
+        if (dir === "up") {
+          if (index > 1) {
+            parent.insertBefore(rows[index], rows[index - 1]);
+            // when the row go up the index will be equal to index - 1
+            index--;
+          }
+        }
+
+        if (dir === "down") {
+          if (index < rows.length - 1) {
+            parent.insertBefore(rows[index + 1], rows[index]);
+            index++;
+          }
+        }
+      }*/
+    </script>
+  </body>
+</html>

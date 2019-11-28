@@ -1,0 +1,38 @@
+<div class="row">
+    <form action="/edit/?sid={{ pbi.id_name }}" method="post">
+        {% csrf_token %}
+        <h3>Editting PBI</h3>
+        
+        <input type="hidden" value = "{{ pbi.id_name }}" name = "id_name"/>                
+
+        <label for="title"><b>Title</b></label>
+        <br />
+        <input type="text" placeholder="Enter title" name = "title" required />
+        <br />
+       
+        <label for="detail"><b>Detail</b></label>
+        <br />
+        <input type="text" placeholder="Enter detail" name = "detail" required />
+        <br />
+
+        <label for="storypoint"><b>Story point</b></label>
+        <br />
+        <input type="text" placeholder="Enter storypoint" name = "story_point" required />
+        <br />
+
+        <label for="status"><b>Status</b></label>
+        <br />
+        <select name = "status">
+            <option value="Not Started">Not Started</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+            <option value="Cancelled">Cancelled</option>
+        </select>
+        <br />
+
+        <br />
+        <a href="/home/"><button type="submit" class="btn">Submit</button>
+        <br />
+        <a href="/home/"><button type="button" class="btn cancel">Close</button>
+    </form>
+</div>
