@@ -7,5 +7,6 @@ from productBacklog import views
 # ]
 
 urlpatterns = [
-    path('', views.pbiViewAll.as_view(), name='project'),
+    # path('', views.pbiViewAll.as_view(), name='project'),
+    path('', views.product_backlog , name='productBacklog'),
 ]

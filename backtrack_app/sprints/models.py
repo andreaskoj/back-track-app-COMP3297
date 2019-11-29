@@ -9,24 +9,6 @@ class ScrumMaster(models.Model):
         return self.user.username
 
 
-class Project(models.Model):
-    name = models.CharField(max_length=200)
-    sprintNumber = models.IntegerField(default=0)
-    id = models.AutoField(primary_key=True)
-    master = models.ForeignKey(ScrumMaster, on_delete=models.SET_NULL, null=True)
-    def __str__(self):
-        return self.name
-
-
-class Developer(models.Model):
-    user = models.OneToOneField(User, related_name="Developer", on_delete=models.CASCADE)
-    isProductOwner = models.BooleanField(null=True, default=False)
-    project = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True, blank=True)
-
-    def __str__(self):
-        return self.user.username
-
-
 class BurndownChart(models.Model):
     estimated_efforts = models.IntegerField()
     remaining_efforts = models.IntegerField()
@@ -40,13 +22,13 @@ class BurndownChart(models.Model):
 class SprintBacklog(models.Model):
     number = models.IntegerField()
     objects = models.Manager()
-    information=models.CharField(max_length=200, default="Description of the current sprint")
-    totalEf = models.IntegerField(default=10,null=True)
+    information = models.CharField(max_length=200, default="Description of the current sprint")
+    totalEf = models.IntegerField(default=10, null=True)
     initialEf = models.IntegerField(default=10)
-    remainEf = models.IntegerField(default=10,null=True)
+    remainEf = models.IntegerField(default=10, null=True)
     id = models.AutoField(primary_key=True)
-    STATUS=(('C','created'),('R','Removed'))
-    status=models.CharField(max_length=10,choices=STATUS,default='created')
+    STATUS = (('C', 'created'), ('R', 'Removed'))
+    status = models.CharField(max_length=10, choices=STATUS, default='created')
 
     # burndown = models.OneToOneField(BurndownChart, on_delete=models.CASCADE)
 
@@ -54,14 +36,34 @@ class SprintBacklog(models.Model):
         return str(self.number)
 
 
+class Project(models.Model):
+    name = models.CharField(max_length=200)
+    sprintNumber = models.IntegerField(default=0)
+    id = models.AutoField(primary_key=True)
+    master = models.ForeignKey(ScrumMaster, on_delete=models.SET_NULL, null=True)
+    sprintBacklog = models.ForeignKey(SprintBacklog, on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Developer(models.Model):
+    user = models.OneToOneField(User, related_name="Developer", on_delete=models.CASCADE)
+    isProductOwner = models.BooleanField(null=True, default=False)
+    project = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return self.user.username
+
+
 class PBI(models.Model):
     description = models.CharField(max_length=200)
     id = models.AutoField(primary_key=True)
-    STATUS = (('NS', 'Not started'), ('IP', 'In progress'), ('C', 'Complete'),('NF','NotFinish'))
+    STATUS = (('NS', 'Not started'), ('IP', 'In progress'), ('C', 'Complete'), ('NF', 'NotFinish'))
     status = models.CharField(max_length=10, choices=STATUS, default='NS')
     sprint = models.ForeignKey(SprintBacklog, null=True, on_delete=models.SET_NULL)
     estimated_efforts = models.IntegerField(null=True)
-    remainStory = models.IntegerField(null=True,default=10)
+    remainStory = models.IntegerField(null=True, default=10)
     objects = models.Manager()
 
     # burndown=models.OneToOneField(BurndownChart, on_delete=models.CASCADE)

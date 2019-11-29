@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from django.conf import settings
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.generic import TemplateView
 from django.views.generic.list import ListView
 from django.views.generic import TemplateView
 from sprints.models import PBI, Developer, ScrumMaster, Project
+
 
 # from project.models import Product_Backlog_Item
 # from project.models import Global_Data
@@ -13,6 +15,28 @@ from sprints.models import PBI, Developer, ScrumMaster, Project
 # ID = int(global_data.current_ID)
 # Total_point = int(global_data.cumu_point)
 # Number = int(global_data.num_pbis)
+
+# def productBacklog(request):
+#     request
+
+def product_backlog(request):
+    if request.user.is_authenticated:
+        user = str(request.user)
+
+        users_project = Developer.objects.filter(user__username=user)[0].project
+        sprint_backlog = Project.objects.filter(name=users_project)[0].sprintBacklog
+        pbis = PBI.objects.filter(sprint=sprint_backlog)
+
+        print(users_project)
+        print(sprint_backlog)
+        print(pbis)
+
+        # print(project)
+        return render(request, 'productBacklog/pbi_list.html', {'pbi_list': pbis})
+        # return HttpResponse(user)
+
+    else:
+        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
 
 
 class pbiViewAll(TemplateView):

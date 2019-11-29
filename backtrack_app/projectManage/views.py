@@ -36,11 +36,14 @@ def auth(request):
                     return render(request, 'projectManage/developer_main.html', {'withoutProjects': True,
                                                                                  'base': 'projectMana'
                                                                                          'ge/base.html',
-                                                                                 'form': form
+                                                                                 'form': form,
                                                                                  })
                 else:
                     # Developer - with project
-                    return render(request, 'projectManage/developer_main.html', {'base': 'base_template.html'})
+                    project = user.project
+                    return render(request, 'projectManage/developer_main.html', {'base': 'base_template.html',
+                                                                                 'project': project,
+                                                                                 })
 
         elif ScrumMaster.objects.filter(user__username=username).exists():
 
