@@ -119,13 +119,13 @@
 
     // }
 
-    function addBtnOnclick(ev){
-        ev.target.children[0].style.display = "block";
-    }
+    // function addBtnOnclick(ev){
+    //     ev.target.children[0].style.display = "block";
+    // }
 
     function substatOnclick(ev){
         var dropdown = ev.target.parentElement.children[1];
-        if (dropdown.children.length!=0) {
+        if (dropdown.children.length!==0) {
             dropdown.innerHTML="";
             return;
         }
@@ -133,17 +133,17 @@
         
         var statusList = ["IP","C"];
         for (i = 0; i < statusList.length; ++i){
-            if(i==1 && ev.target.getAttribute("data-remain")!=0){
+            if(i===1 && ev.target.getAttribute("data-remain")!==0){
                 console.log('1:'+ev.target.getAttribute("data-remain"));
                 break;
             }
-            if (statusList[i] != ev.target.innerText){
+            if (statusList[i] !== ev.target.innerText){
                 var ele = document.createElement("div");
                 ele.className = "statusOpt";
                 ele.innerHTML = statusList[i];
                 ele.onclick=function(){
                     changeSubTask(event);
-                }
+                };
                 ele.setAttribute("rel", ev.target.getAttribute("rel"));
                 console.log(ele.getAttribute("rel"));
                 dropdown.appendChild(ele);
@@ -204,8 +204,8 @@
 
     function pplBtnOnClick(ev){
         for(i = 0; i < ev.target.parentElement.children.length;++i){
-            if(ev.target.parentElement.children[i].className == "taskInvoleBtn"){
-                if(ev.target.parentElement.children[i].style.display!="block"){
+            if(ev.target.parentElement.children[i].className === "taskInvoleBtn"){
+                if(ev.target.parentElement.children[i].style.display!=="block"){
                     ev.target.parentElement.children[i].style.display="block";
                 }else{
                     ev.target.parentElement.children[i].style.display="none";
