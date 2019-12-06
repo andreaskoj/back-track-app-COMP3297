@@ -2,14 +2,7 @@
 # #
 # #
 # # # Create your models here.
-# # class Global_Data(models.Model):
-# #     global_id = models.CharField(max_length=20, unique=True)
-# #     current_ID = models.CharField(max_length=20)
-# #     cumu_point = models.DecimalField(max_digits=6, decimal_places=0)
-# #     num_pbis = models.DecimalField(max_digits=4, decimal_places=0)
-# #
-# #     def __str__(self):
-# #         return self.global_id
+
 # #
 # #
 # # class Product_Backlog_Item(models.Model):

@@ -1,4 +1,5 @@
-{% load static %}
+{% extends 'base.html' %}
+{% block content %}
 <link rel="stylesheet" type="text/css" href="{% static 'productBacklog/style.css' %}">
 <table id="nav-bar">
     <tr>
@@ -9,3 +10,4 @@
         <td><img id="humanIcon" src="{% static 'productBacklog/humanIcon.png' %}"></td>
     </tr>
 </table>
+{% endblock %}

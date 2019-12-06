@@ -64,6 +64,7 @@ class PBI(models.Model):
     sprint = models.ForeignKey(SprintBacklog, null=True, on_delete=models.SET_NULL)
     estimated_efforts = models.IntegerField(null=True)
     remainStory = models.IntegerField(null=True, default=10)
+
     objects = models.Manager()
 
     # burndown=models.OneToOneField(BurndownChart, on_delete=models.CASCADE)
@@ -97,3 +98,12 @@ class SubTask(models.Model):
 
     def __str__(self):
         return self.title
+
+class Global_Data(models.Model):
+    global_id = models.CharField(max_length=20, unique=True)
+    current_ID = models.CharField(max_length=20)
+    cumu_point = models.DecimalField(max_digits=6, decimal_places=0)
+    num_pbis = models.DecimalField(max_digits=4, decimal_places=0)
+
+    def __str__(self):
+        return self.global_id

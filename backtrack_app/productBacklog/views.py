@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.views.generic import TemplateView
 from django.views.generic.list import ListView
 from django.views.generic import TemplateView
-from sprints.models import PBI, Developer, ScrumMaster, Project
+from sprints.models import PBI, Developer, ScrumMaster, Project, Global_Data
 
 
 # from project.models import Product_Backlog_Item
@@ -66,7 +66,7 @@ class pbiViewAll(TemplateView):
     #     e = str(Total_point)
     #     f = str('Not Started')
     #     g = 0
-    #     Product_Backlog_Item.objects.create(id_name=a,
+    #     PBI.objects.create(
     #                                         title=b, detail=c, story_point=d,
     #                                         cumulative_story_point=e, status=f,
     #                                         priority=g)
@@ -103,24 +103,24 @@ class pbiViewAll(TemplateView):
 #         return redirect('/home/')
 #     return render(request, 'pbi_edit.html', locals())
 #
-# # def edit(request):
-# #     global Total_point
-# #     sid = request.GET.get('sid')
-# #     a = str(request.GET['id_name'])
-# #     pbi = Product_Backlog_Item.objects.get(id_name = a)
-# #     #a = pbi.id_name
-# #     Total_point = Total_point - int(pbi.story_point)
-# #     b = str(request.GET['title'])
-# #     c = str(request.GET['detail'])
-# #     d = request.GET['story_point']
-# #     Total_point = Total_point + int(d)
-# #     Global_Data.objects.filter(global_id = '00001').update(cumu_point = Total_point)
-# #     e = str(Total_point)
-# #     f = str(request.GET['status'])
-# #     Product_Backlog_Item.objects.filter(id_name = a).update(
-# #                                   title = b, detail = c, story_point = d,
-# #                                   cumulative_story_point = e, status = f)
-# #     return redirect('/home/')
+def edit(request):
+    global Total_point
+    sid = request.GET.get('sid')
+    a = str(request.GET['id_name'])
+    pbi = PBI.objects.get(id_name = a)
+    #a = pbi.id_name
+    Total_point = Total_point - int(pbi.story_point)
+    b = str(request.GET['title'])
+    c = str(request.GET['detail'])
+    d = request.GET['story_point']
+    Total_point = Total_point + int(d)
+    Global_Data.objects.filter(global_id = '00001').update(cumu_point = Total_point)
+    e = str(Total_point)
+    f = str(request.GET['status'])
+    PBI.objects.filter(id_name = a).update(
+                                  description = b, estimated_efforts = d,
+                                  status = f)
+    return render(request, 'pbi_edit.html', locals())
 #
 #
 # # def up(request):

@@ -1,13 +1,267 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
 
-    <!-- css codes included in html file -->
-    <style type="text/css">
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block content %}
+<html lang="en">
+  <!--<head>-->
+    <!--<meta charset="UTF-8" />-->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0" />-->
+    <!--<meta http-equiv="X-UA-Compatible" content="ie=edge" />-->
+    <!--<title>Document</title>-->
+
+    <!--&lt;!&ndash; css codes included in html file &ndash;&gt;-->
+
+  <!--</head>-->
+  <!--<body>-->
+    <!--<div>-->
+      <!--<table id="bar">-->
+        <!--<th width="50%">BackTrack</th>-->
+        <!--<th width="15%">-->
+          <!--<select>-->
+            <!--<option value="project_1">Project 1</option>-->
+            <!--<option value="project_2">Project 2</option>-->
+          <!--</select>-->
+        <!--</th>-->
+        <!--<th width="20%">Product Backlog</th>-->
+        <!--<th width="15%">Sprint</th>-->
+        <!--<th width="5%" class="icon"><img src="" width="30px" /></th>-->
+      <!--</table>-->
+    <!--</div>-->
+
+    <div id="pagename">
+      <h1>Product Backlog Items</h1>
+    </div>
+
+
+    <div id="buttons">
+        <form action="/current/" method="get">
+            <button>current view</button>
+        </form>
+
+        <form action="/full/" method="get">
+            <button>full view</button>
+        </form>
+    </div>
+
+
+    {% for pbi in pbi_list %}
+      <div id="tablediv">
+      
+        <table id = "table">
+          <tr style="display: flex; width: 1380px">
+            <th style="flex: 30%;">title</th>
+{#            <th style="flex: 30%;">detail</th>#}
+            <th style="flex: 15%;">story point</th>
+            <th style="flex: 15%;">accumulated story points</th>
+            <th style="flex:10%;">status</th>
+              <th style="flex:15%;">Delete</th>
+              <th style="flex:15%;">Edit</th>
+          </tr>
+
+          <tr style="display: flex; width: 1380px">
+            <td style="flex: 30%;">{{ pbi.description }} </td>
+{#            <td style="flex: 30%;">{{ pbi.description }}</td>#}
+            <td style="flex: 15%;" class="storypoint">{{ pbi.estimated_efforts }}</td>
+            <td style="flex: 15%;" class="cumulated_storypoint">{{ pbi.cumulative_story_point }}</td>
+            <td style="flex: 10%;">{{ pbi.get_status_display }}</td>
+
+            {% comment %} <!--up a pbi-->
+            <td>
+              <a href="/del/{{ pbi.id_name }}"><button class="btn btn-danger">Up</button></a>
+            </td>
+            <!--up a pbi-->
+
+            <!--down a pbi-->
+            <td>
+              <a href="/del/{{ pbi.id_name }}"><button class="btn btn-danger">Down</button></a>
+            </td>
+            <!--down a pbi--> {% endcomment %}
+           
+            <!--delete a pbi-->
+            <td style="flex: 15%;">
+              <a href="/del/?sid={{ pbi.id_name }}"><button class="btn btn-danger" id="deleteButton">Delete</button></a>
+            </td>
+            <!--delete a pbi-->
+            
+            <!--edit a pbi-->
+            <td  style="flex: 15%;">
+              <!--<a href="/edit/?sid={{ pbi.id_name }}"><button class="btn btn-primary">Edit</button></a>-->
+            <button class="btn btn-danger" onclick="openEditForm()" id="editButton">Edit</button></a>
+            </td>
+            <!--edit a pbi-->
+
+          </tr>
+        </table>
+      </div>
+    {% empty %}
+      <li>No PBI yet.</li>
+    {% endfor %}
+
+    <div id="addbox" onclick="openAddForm()">
+      +
+    </div>
+
+
+<!-- pop up for inputing -->
+    <div class="form-popup" id="AddForm">
+      <form
+        action="/add/"
+        class="form-container"
+        id="form"
+        method="get"
+      >
+      {% csrf_token %}
+        <h3>Creating new PBI</h3>
+        <br />
+      
+        <label for="title"><b>Title</b></label>
+        <br />
+        <input type="text" placeholder="Enter title" name = "title" required />
+        <br />
+       
+        <label for="detail"><b>Detail</b></label>
+        <br />
+        <textarea name="detail" cols="40" rows="10" wrap="soft" form="form"></textarea>
+        <br />
+
+        <label for="storypoint"><b>Story point</b></label>
+        <br />
+        <input type="text" placeholder="Enter storypoint" name = "story_point" required />
+        <div style="display: flex">
+            <span style="flex: 50%">
+          <br />
+        <button type="submit" class="btn" id="submitAdd">Submit</button>
+            </span>
+            <span style="flex: 50%">
+        <br />
+        <button type="button" class="btn cancel" onclick="closeAddForm()" id="closeAdd">Close</button></span>
+        </div>
+      </form>
+    </div>
+<!-- pop up for inputing -->
+
+<!-- pop up for inputing -->
+    <div class="form-popup" id="EditForm">
+      <form
+        action="/edit/?sid = {{ pbi.id_name }}"
+        class="form-container"
+        id="form"
+        method="get"
+      >
+      {% csrf_token %}
+        <h3>Editting PBI</h3>
+
+        <!--<br />-->
+        <!--<label for="PBI ID"><b>ID</b></label>-->
+        <!--<br />-->
+        <!--<input type="text" value = "{{ pbi.id_name }}" name = "id_name"/>-->
+        <br />
+
+        <label for="title"><b>Title</b></label>
+        <br />
+        <input type="text" placeholder="Enter title" name = "title" required />
+        <br />
+       
+        <label for="detail"><b>Detail</b></label>
+        <br />
+        <input type="text" placeholder="Enter detail" name = "detail" required />
+        <br />
+
+        <label for="storypoint"><b>Story point</b></label>
+        <br />
+        <input type="text" placeholder="Enter storypoint" name = "story_point" required />
+        <br />
+
+        <label for="status"><b>Status</b></label>
+        <br />
+        <select name = "status">
+            <option value="Not Started">Not Started</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+            <option value="Cancelled">Cancelled</option>
+        </select>
+        <br />
+
+        <br />
+
+        <div style="display: flex">
+            <span style="flex: 50%">
+                <br />
+        <button type="submit" class="btn" id="submitForm">Submit</button>
+            </span>
+            <span style="flex: 50%">
+        <br />
+
+        <button type="button" class="btn cancel" onclick="closeEditForm()" id="closeForm">Close</button>
+            </span>
+        </div>
+      </form>
+    </div>
+<!-- pop up for inputing -->
+
+
+  </body>
+</html>
+{%endblock%}
+{%block script%}
+    <script>
+      var table = document.getElementById("table");
+      var r;
+
+      function openAddForm() {
+        document.getElementById("AddForm").style.display = "block";
+      }
+
+      function closeAddForm() {
+        document.getElementById("AddForm").style.display = "none";
+      }
+
+      function openEditForm() {
+        document.getElementById("EditForm").style.display = "block";
+      }
+
+      function closeEditForm() {
+        document.getElementById("EditForm").style.display = "none";
+      }
+
+      /*var index;
+      function getSelectedRow() {
+        for (var i = 1; i < table.rows.length; i++) {
+          table.rows[i].onclick = function() {
+            if (typeof index != "undefined") {
+              table.rows[index].classList.toggle("selected");
+            }
+
+            index = this.rowIndex;
+            this.classList.toggle("selected");
+          };
+        }
+      }
+
+      getSelectedRow();
+
+      function updown(dir) {
+        var rows = document.getElementById("table").rows,
+          parent = rows[index].parentNode;
+        if (dir === "up") {
+          if (index > 1) {
+            parent.insertBefore(rows[index], rows[index - 1]);
+            // when the row go up the index will be equal to index - 1
+            index--;
+          }
+        }
+
+        if (dir === "down") {
+          if (index < rows.length - 1) {
+            parent.insertBefore(rows[index + 1], rows[index]);
+            index++;
+          }
+        }
+      }*/
+    </script>
+{%endblock%}
+{%block style%}
+   <style type="text/css">
       body {
         background-color: lightcyan;
       }
@@ -27,6 +281,42 @@
       #pagename h1 {
         text-align: center;
       }
+      #deleteButton{
+          border: solid 1px black;
+          text-align: center;
+          width: 50px;
+          background-color: #bbbbbb;
+      }
+      #editButton{
+          border: solid 1px black;
+           text-align: center;
+          width: 50px;
+          background-color: yellowgreen;
+      }
+      #submitForm{
+          text-align: center;
+          border: solid 1px black;
+           width: 80px;
+          background-color: #bbccdd;
+      }
+      #submitAdd{
+          text-align: center;
+          border: solid 1px black;
+           width: 80px;
+          background-color: #bbccdd;
+      }
+      #closeForm{
+          border: solid 1px black;
+          text-align: center;
+           width: 80px;
+          background-color: #bbccdd;
+      }
+        #closeAdd{
+          border: solid 1px black;
+          text-align: center;
+           width: 80px;
+          background-color: #bbccdd;
+      }
 
       #buttons {
         display: flex;
@@ -34,7 +324,8 @@
       }
 
       table {
-        width: 100%;
+        width: 1380px;
+        margin-left:20px;
         margin-top: 20px;
         background-color: white;
       }
@@ -51,6 +342,8 @@
         border: 1px solid black;
         text-align: center;
         margin-top: 100px;
+          width: 1380px;
+          margin-left: 20px;
         padding: 40px;
         background-color: white;
       }
@@ -104,235 +397,4 @@
         background-color: yellow;
       }
     </style>
-  </head>
-  <body>
-    <div>
-      <table id="bar">
-        <th width="50%">BackTrack</th>
-        <th width="15%">
-          <select>
-            <option value="project_1">Project 1</option>
-            <option value="project_2">Project 2</option>
-          </select>
-        </th>
-        <th width="20%">Product Backlog</th>
-        <th width="15%">Sprint</th>
-        <th width="5%" class="icon"><img src="" width="30px" /></th>
-      </table>
-    </div>
-
-    <div id="pagename">
-      <h1>Product Backlog Items</h1>
-    </div>
-
-
-    <div id="buttons">
-        <form action="/current/" method="get">
-            <button>current view</button>
-        </form>
-
-        <form action="/full/" method="get">
-            <button>full view</button>
-        </form>
-    </div>
-
-
-    {% for pbi in pbi_list %}
-      <div id="tablediv">
-      
-        <table id = "table">
-          <tr>
-            <th>title</th>
-{#            <th>detail</th>#}
-            <th>story point</th>
-            <th>C story points</th>
-            <th>status</th>
-          </tr>
-
-          <tr>
-            <td>{{ pbi.description }} </td>
-{#            <td>{{ pbi.description }}</td>#}
-            <td>{{ pbi.estimated_efforts }}</td>
-            <td>{{ pbi.cumulative_story_point }}</td>
-            <td>{{ pbi.status }}</td>
-
-            {% comment %} <!--up a pbi-->
-            <td>
-              <a href="/del/{{ pbi.id_name }}"><button class="btn btn-danger">Up</button></a>
-            </td>
-            <!--up a pbi-->
-
-            <!--down a pbi-->
-            <td>
-              <a href="/del/{{ pbi.id_name }}"><button class="btn btn-danger">Down</button></a>
-            </td>
-            <!--down a pbi--> {% endcomment %}
-           
-            <!--delete a pbi-->
-            <td>
-              <a href="/del/?sid={{ pbi.id_name }}"><button class="btn btn-danger">Delete</button></a>
-            </td>
-            <!--delete a pbi-->
-            
-            <!--edit a pbi-->
-            <td>
-              <a href="/edit/?sid={{ pbi.id_name }}"><button class="btn btn-primary">Edit</button></a>
-            {% comment %} <button class="btn btn-danger" onclick="openEditForm();return false;">Edit</button></a> {% endcomment %}
-            </td>
-            <!--edit a pbi-->
-
-          </tr>
-        </table>
-      </div>
-    {% empty %}
-      <li>No PBI yet.</li>
-    {% endfor %}
-
-    <div id="addbox" onclick="openAddForm()">
-      +
-    </div>
-
-
-<!-- pop up for inputing -->
-    <div class="form-popup" id="AddForm">
-      <form
-        action="/add/"
-        class="form-container"
-        id="form"
-        method="get"
-      >
-      {% csrf_token %}
-        <h3>Creating new PBI</h3>
-        <br />
-      
-        <label for="title"><b>Title</b></label>
-        <br />
-        <input type="text" placeholder="Enter title" name = "title" required />
-        <br />
-       
-        <label for="detail"><b>Detail</b></label>
-        <br />
-        <textarea name="detail" cols="40" rows="10" wrap="soft" form="form"></textarea>
-        <br />
-
-        <label for="storypoint"><b>Story point</b></label>
-        <br />
-        <input type="text" placeholder="Enter storypoint" name = "story_point" required />
-        <br />
-
-        <button type="submit" class="btn">Submit</button>
-        <br />
-        <button type="button" class="btn cancel" onclick="closeAddForm()">Close</button>
-      </form>
-    </div>
-<!-- pop up for inputing -->
-
-{% comment %} <!-- pop up for inputing -->
-    <div class="form-popup" id="EditForm">
-      <form
-        action="/edit/?sid = {{ pbi.id_name }}"
-        class="form-container"
-        id="form"
-        method="get"
-      >
-      {% csrf_token %}
-        <h3>Editting PBI</h3>
-
-        <br />
-        <label for="PBI ID"><b>ID</b></label>
-        <br />
-        <input type="text" value = "{{ pbi.id_name }}" name = "id_name"/>
-        <br />
-
-        <label for="title"><b>Title</b></label>
-        <br />
-        <input type="text" placeholder="Enter title" name = "title" required />
-        <br />
-       
-        <label for="detail"><b>Detail</b></label>
-        <br />
-        <input type="text" placeholder="Enter detail" name = "detail" required />
-        <br />
-
-        <label for="storypoint"><b>Story point</b></label>
-        <br />
-        <input type="text" placeholder="Enter storypoint" name = "story_point" required />
-        <br />
-
-        <label for="status"><b>Status</b></label>
-        <br />
-        <select name = "status">
-            <option value="Not Started">Not Started</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Completed">Completed</option>
-            <option value="Cancelled">Cancelled</option>
-        </select>
-        <br />
-
-        <br />
-        <br />
-        
-        <button type="submit" class="btn">Submit</button>
-        <br />
-        <button type="button" class="btn cancel" onclick="closeEditForm()">Close</button>
-      </form>
-    </div>
-<!-- pop up for inputing --> {% endcomment %}
-
-    <script>
-      var table = document.getElementById("table");
-      var r;
-
-      function openAddForm() {
-        document.getElementById("AddForm").style.display = "block";
-      }
-
-      function closeAddForm() {
-        document.getElementById("AddForm").style.display = "none";
-      }
-/*
-      function openEditForm() {
-        document.getElementById("EditForm").style.display = "block";
-      }
-
-      function closeEditForm() {
-        document.getElementById("EditForm").style.display = "none";
-      }
-*/
-      /*var index;
-      function getSelectedRow() {
-        for (var i = 1; i < table.rows.length; i++) {
-          table.rows[i].onclick = function() {
-            if (typeof index != "undefined") {
-              table.rows[index].classList.toggle("selected");
-            }
-
-            index = this.rowIndex;
-            this.classList.toggle("selected");
-          };
-        }
-      }
-
-      getSelectedRow();
-
-      function updown(dir) {
-        var rows = document.getElementById("table").rows,
-          parent = rows[index].parentNode;
-        if (dir === "up") {
-          if (index > 1) {
-            parent.insertBefore(rows[index], rows[index - 1]);
-            // when the row go up the index will be equal to index - 1
-            index--;
-          }
-        }
-
-        if (dir === "down") {
-          if (index < rows.length - 1) {
-            parent.insertBefore(rows[index + 1], rows[index]);
-            index++;
-          }
-        }
-      }*/
-    </script>
-  </body>
-</html>
+{% endblock %}
