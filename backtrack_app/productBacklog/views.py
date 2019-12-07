@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.generic import TemplateView
 from django.views.generic.list import ListView
+# from functools import reduce
 from django.views.generic import TemplateView
 from sprints.models import PBI, Developer, ScrumMaster, Project, Global_Data
 
@@ -25,8 +26,14 @@ def product_backlog(request):
 
         users_project = Developer.objects.filter(user__username=user)[0].project
         sprint_backlog = Project.objects.filter(name=users_project)[0].sprintBacklog
-        pbis = PBI.objects.filter(sprint=sprint_backlog)
-
+        pbis = PBI.objects.order_by('priority') # by default we show a full view of list of pbis
+        for pbi in pbis:
+            if pbi.priority==0:
+                pbi.cumulative_storypoint=pbi.estimated_efforts
+            else:
+                order=pbi.priority
+                previous=list(filter(lambda x: x.priority == order-1, pbis))[0]
+                pbi.cumulative_storypoint=pbi.estimated_efforts+previous.cumulative_storypoint
         print(users_project)
         print(sprint_backlog)
         print(pbis)
