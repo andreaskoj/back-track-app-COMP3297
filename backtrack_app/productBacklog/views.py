@@ -23,7 +23,9 @@ from sprints.models import PBI, Developer, ScrumMaster, Project, Global_Data
 def product_backlog(request):
     if request.user.is_authenticated:
         user = str(request.user)
-
+        if request.GET.get("DeletePBI"):
+            pbi = PBI.objects.get(pk=int(request.GET.get('DeleteButton')))
+            pbi.delete()
         users_project = Developer.objects.filter(user__username=user)[0].project
         sprint_backlog = Project.objects.filter(name=users_project)[0].sprintBacklog
         pbis = PBI.objects.order_by('priority') # by default we show a full view of list of pbis
@@ -39,33 +41,32 @@ def product_backlog(request):
         print(pbis)
 
 
+
         # print(project)
         return render(request, 'productBacklog/pbi_list.html', {'pbi_list': pbis})
         # return HttpResponse(user)
 
     else:
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
-# def addPBI(request):
-#         # global Total_point
-#         # global ID
-#         # global Number
-#         # a = str(ID)
-#         # ID = ID + 1
-#         b = str(request.GET['title'])
-#         c = str(request.GET['detail'])
-#         d = request.GET['story_point']
-#         # Total_point = Total_point + int(d)
-#         # Number = Number + 1
-#         Global_Data.objects.filter(global_id='00001').update(current_ID=str(ID), cumu_point=Total_point,
-#                                                              num_pbis=Number)
-#         e = str(Total_point)
-#         f = str('Not Started')
-#         g = 0
-#         PBI.objects.create(
-#                             description=b, estimated_efforts=d,
-#                             cumulative_storypoint=e, status=f,
-#                             priority=g)
-#         return redirect('/home/')
+
+def addPBI(request):
+        # global Total_point
+        # global ID
+        # global Number
+        # a = str(ID)
+        # a = str(ID)
+        # ID = ID + 1
+        b = str(request.POST.get('title',False))
+        d = request.POST.get('story_point', False)
+        pbis = PBI.objects.order_by('priority')
+        for pbi in pbis:
+            pbi.priority+=1
+            pbi.save()
+        PBI.objects.create(remainStory=d, description=b, priority=0)
+        # pbis = PBI.objects.order_by('priority')
+        # return render(request, 'productBacklog/pbi_list.html', {'pbi_list': pbis})
+        return redirect('http://127.0.0.1:8000/productBacklog')
+
 
 
 # class pbiViewAll(TemplateView):
