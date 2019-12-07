@@ -76,7 +76,7 @@ def addPBI(request):
         for pbi in pbis:
             pbi.priority+=1
             pbi.save()
-        PBI.objects.create(remainStory=d, description=b, priority=0)
+        PBI.objects.create(remainStory=d, description=b, priority=0, estimated_efforts=int(d/3))
         # pbis = PBI.objects.order_by('priority')
         # return render(request, 'productBacklog/pbi_list.html', {'pbi_list': pbis})
         return redirect('http://127.0.0.1:8000/productBacklog')

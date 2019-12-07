@@ -5,7 +5,7 @@
 
     <div class="row">
         <h1 style="text-align: left;margin-left: 20px;margin-top:40px">Sprint Backlog Overview</h1></div>
-    <div class="row"><h2 style="text-align: left;margin: 20px">Sprint {{sprint.number}}</h2></div>
+    <div class="row"><h2 style="text-align: left;margin: 20px" >Sprint {{sprint.number}}</h2></div>
     <div class="row" style="display: flex;">
         <div class="column" style="flex: 70%; margin-top: 10px">
             <div id="SprintInfo">
@@ -23,6 +23,7 @@
                 </form>
                 <form action="delsprint/" method="POST">
                     {%csrf_token%}
+                    <input type="hidden" name="sprintNumber" value={{sprint.number}}>
                     <p style="text-align: right; padding-left: 10px; float: left;"><button style="background-color: #bbccdd;border: 1px black solid;border-radius: 5px" type="submit">DELETE</button></p>
                  </form>
             </div>
@@ -34,11 +35,11 @@
                 <div class="cardcontainer" style="padding: 2px 10px;">
                     <div style="width:100%;display: flex">
                         <div style="flex: 50%;text-align: left;margin-left: 0"><b>PBI {{task.pbi.id}}</b></div>
-                        <div class="cardStatus">{{task.pbi.get_status_display}}</div>
+                        <div class="cardStatus" style="flex: 50%;">{{task.pbi.get_status_display}}</div>
                     </div>
-                        <div class="description">Description: {{task.pbi.description}}</div>
-                        <div >Total Efforts: <span class="initialEfforts">{{task.totalEf}}</span> </div>
-                        <div >Remaining Efforts: <span class="remainingEfforts">{{task.remainEf}}</span></div>
+                    <div class="description" style="width: 100%"><span><b>Description: </b></span> <span>{{task.pbi.description}}</span></div>
+                    <div style="width: 100%"><span><b>Total Efforts: </b></span><span class="initialEfforts">{{task.pbi.estimated_efforts}}</span> </div>
+                    <div style="width: 100%"><span><b>Remaining Efforts: </b></span> <span class="remainingEfforts">{{task.pbi.remaining_efforts}}</span></div>
                         <div>
                             <form action="" method="GET">
                                 <button style="font-size:12px;border-radius: 5px;border: 0 none; background-color: #bbccdd" class="DeleteButton" name="DeleteButton" value="{{task.id}}">REMOVE</button>
