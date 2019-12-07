@@ -81,7 +81,7 @@
             <!--delete a pbi-->
             <td style="flex: 5%;">
                     <form action="" method="GET">
-                        <button class="DeleteButton" name="DeletePBI" value="{{pbi.id}}">Delete</button>
+                        <button class="deleteButton" name="DeletePBI" value="{{pbi.id}}">Delete</button>
                     </form>
               <!--<a href="/del/?sid={{ pbi.id_name }}"><button class="btn btn-danger" id="deleteButton">Delete</button></a>-->
             </td>
@@ -296,17 +296,17 @@
       #pagename h1 {
         text-align: center;
       }
-      #deleteButton{
+      .deleteButton{
           border: solid 1px black;
           text-align: center;
           width: 50px;
-          background-color: #bbbbbb;
+          background-color: lightgrey;
       }
       #editButton{
           border: solid 1px black;
            text-align: center;
           width: 50px;
-          background-color: lightgreen;
+          background-color: #ffffcc;
       }
       #submitForm{
           text-align: center;

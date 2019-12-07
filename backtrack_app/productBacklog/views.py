@@ -24,18 +24,24 @@ def product_backlog(request):
     if request.user.is_authenticated:
         user = str(request.user)
         if request.GET.get("DeletePBI"):
-            pbi = PBI.objects.get(pk=int(request.GET.get('DeleteButton')))
+            pbi = PBI.objects.get(pk=int(request.GET.get('DeletePBI')))
+            priority=pbi.priority
+            pbi_list=PBI.objects.order_by('priority')
+            for i in range(priority,len(pbi_list)):
+                pbi_list[i].priority-=1
+                pbi_list[i].save()
             pbi.delete()
         users_project = Developer.objects.filter(user__username=user)[0].project
         sprint_backlog = Project.objects.filter(name=users_project)[0].sprintBacklog
         pbis = PBI.objects.order_by('priority') # by default we show a full view of list of pbis
-        for pbi in pbis:
-            if pbi.priority==0:
-                pbi.cumulative_storypoint=pbi.remainStory
+        for i in range(len(pbis)):
+            if i==0:
+                pbis[i].cumulative_storypoint=pbis[i].remainStory
+                pbis[i].save()
             else:
-                order=pbi.priority
-                previous=list(filter(lambda x: x.priority == order-1, pbis))[0]
-                pbi.cumulative_storypoint=pbi.remainStory+previous.cumulative_storypoint
+                order=pbis[i].priority
+                pbis[i].cumulative_storypoint=pbis[i].remainStory+pbis[i-1].cumulative_storypoint
+                pbis[i].save()
         print(users_project)
         print(sprint_backlog)
         print(pbis)
