@@ -84,13 +84,15 @@
 
             {% comment %} <!--up a pbi-->
             <td>
-              <a href="/del/{{ pbi.id_name }}"><button class="btn btn-danger">Up</button></a>
+
+                <a href="/del/{{ pbi.id_name }}"><button class="btn btn-danger" ></button></a>
+              
             </td>
             <!--up a pbi-->
 
             <!--down a pbi-->
             <td>
-              <a href="/del/{{ pbi.id_name }}"><button class="btn btn-danger">Down</button></a>
+              <a href="/del/{{ pbi.id_name }}"><button class="btn btn-danger"></button></a>
             </td>
             <!--down a pbi--> {% endcomment %}
            
@@ -113,10 +115,19 @@
               <!--up a pbi-->
               <td style="flex: 10%">
                   <span style="flex: 50%;margin-right: 5px">
-                  <button onclick="upPriority()" class="priorityButton">Up</button>
+                  <form action="up/" method="get">
+                    <input  type="hidden" name="id" value="{{pbi.id}}" >
+                    <input  type="hidden" name="priority" value="{{pbi.priority}}" >
+                    <button  class="priorityButton">Up</button>
+                  </form>
+                  
                   </span>
                   <span style="flex: 50%; margin-left: 5px">
-                  <button onclick="downPriority()" class="priorityButton">Down</button>
+                    <form action="down/" method="get">
+                      <input  type="hidden" name="id" value="{{pbi.id}}" >
+                      <input  type="hidden" name="priority" value="{{pbi.priority}}" >
+                      <button  class="priorityButton">Down</button>
+                  </form>
                   </span>
               </td>
               <!--up a pbi-->
@@ -338,9 +349,7 @@
           /*background-color;*/
       /*}*/
 
-      .nonIP{
-        display: none;
-      }
+
       #submitForm{
           text-align: center;
           border: solid 1px black;

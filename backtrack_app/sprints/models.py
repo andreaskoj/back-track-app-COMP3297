@@ -57,6 +57,7 @@ class Developer(models.Model):
 
 
 class PBI(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True)
     description = models.CharField(max_length=200)
     id = models.AutoField(primary_key=True)
     STATUS = (('NS', 'Not started'), ('IP', 'In progress'), ('C', 'Complete'), ('NF', 'NotFinish'))
@@ -69,6 +70,8 @@ class PBI(models.Model):
     cumulative_storypoint=models.IntegerField(null=True, default=0, blank=True)
 
     # burndown=models.OneToOneField(BurndownChart, on_delete=models.CASCADE)
+    class Meta:
+        ordering = ['priority']
     def __str__(self):
         return self.description
 

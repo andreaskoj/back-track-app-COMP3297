@@ -81,6 +81,33 @@ def addPBI(request):
         # return render(request, 'productBacklog/pbi_list.html', {'pbi_list': pbis})
         return redirect('http://127.0.0.1:8000/productBacklog')
 
+def upPBI(request):
+        # global Total_point
+        # global ID
+        # global Number
+        # a = str(ID)
+        # a = str(ID)
+        # ID = ID + 1
+        priority = int(request.GET['priority'])
+        PBI.objects.filter(pk=request.GET['id']).update(priority=priority+1)
+        # pbis = PBI.objects.order_by('priority')
+        # return render(request, 'productBacklog/pbi_list.html', {'pbi_list': pbis})
+        return redirect('http://127.0.0.1:8000/productBacklog')
+
+def downPBI(request):
+        # global Total_point
+        # global ID
+        # global Number
+        # a = str(ID)
+        # a = str(ID)
+        # ID = ID + 1
+        priority = int(request.GET['priority'])
+        if priority > 0:
+            PBI.objects.filter(pk=request.GET['id']).update(priority=priority-1)
+        # pbis = PBI.objects.order_by('priority')
+        # return render(request, 'productBacklog/pbi_list.html', {'pbi_list': pbis})
+        return redirect('http://127.0.0.1:8000/productBacklog')
+
 # def edit(request):
 #     sid = request.GET.get('sid')
 #     a = str(request.GET['id_name'])
