@@ -29,14 +29,15 @@ def product_backlog(request):
         pbis = PBI.objects.order_by('priority') # by default we show a full view of list of pbis
         for pbi in pbis:
             if pbi.priority==0:
-                pbi.cumulative_storypoint=pbi.estimated_efforts
+                pbi.cumulative_storypoint=pbi.remainStory
             else:
                 order=pbi.priority
                 previous=list(filter(lambda x: x.priority == order-1, pbis))[0]
-                pbi.cumulative_storypoint=pbi.estimated_efforts+previous.cumulative_storypoint
+                pbi.cumulative_storypoint=pbi.remainStory+previous.cumulative_storypoint
         print(users_project)
         print(sprint_backlog)
         print(pbis)
+
 
         # print(project)
         return render(request, 'productBacklog/pbi_list.html', {'pbi_list': pbis})
@@ -44,6 +45,27 @@ def product_backlog(request):
 
     else:
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+# def addPBI(request):
+#         # global Total_point
+#         # global ID
+#         # global Number
+#         # a = str(ID)
+#         # ID = ID + 1
+#         b = str(request.GET['title'])
+#         c = str(request.GET['detail'])
+#         d = request.GET['story_point']
+#         # Total_point = Total_point + int(d)
+#         # Number = Number + 1
+#         Global_Data.objects.filter(global_id='00001').update(current_ID=str(ID), cumu_point=Total_point,
+#                                                              num_pbis=Number)
+#         e = str(Total_point)
+#         f = str('Not Started')
+#         g = 0
+#         PBI.objects.create(
+#                             description=b, estimated_efforts=d,
+#                             cumulative_storypoint=e, status=f,
+#                             priority=g)
+#         return redirect('/home/')
 
 
 # class pbiViewAll(TemplateView):
