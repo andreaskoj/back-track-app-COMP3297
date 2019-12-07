@@ -34,20 +34,20 @@
 
 
     <div id="buttons">
-        <form action="/current/" method="get">
-            <button>current view</button>
-        </form>
+        <!-- <form action="/current/" method="get"> -->
+            <button onclick="filterCurrent(0)">current view</button>
+        <!-- </form> -->
 
-        <form action="/full/" method="get">
-            <button>full view</button>
-        </form>
+        <!-- <form action="/full/" method="get"> -->
+            <button onclick="filterCurrent(1)">full view</button>
+        <!-- </form> -->
     </div>
 
-
+    
     {% for pbi in pbi_list %}
       <div id="tablediv">
 
-        <table id = "table">
+        <table id = "table" {%if pbi.status != "IP" %} class = "nonIP" {%endif%}>
           <tr style="display: flex; width: 1380px">
             <th style="flex: 25%;">title</th>
 {#            <th style="flex: 30%;">detail</th>#}
@@ -256,6 +256,18 @@
         document.getElementById("EditForm").style.display = "none";
       }
 
+      function filterCurrent(control){
+        var x = document.getElementsByClassName("nonIP");
+        var i;
+        for (i = 0; i < x.length; i++) {
+          if(control == 0)
+            x[i].style.display = 'none';
+          else 
+            x[i].style.display = 'block';
+        }
+
+      }
+
       /*var index;
       function getSelectedRow() {
         for (var i = 1; i < table.rows.length; i++) {
@@ -325,6 +337,10 @@
           /*width: 50px;*/
           /*background-color;*/
       /*}*/
+
+      .nonIP{
+        display: none;
+      }
       #submitForm{
           text-align: center;
           border: solid 1px black;
