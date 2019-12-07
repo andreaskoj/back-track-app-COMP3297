@@ -89,7 +89,15 @@ def upPBI(request):
         # a = str(ID)
         # ID = ID + 1
         priority = int(request.GET['priority'])
-        PBI.objects.filter(pk=request.GET['id']).update(priority=priority+1)
+        if priority>0:
+            current=PBI.objects.filter(priority=priority)[0]
+            previous=PBI.objects.filter(priority=priority-1)[0]
+            current.priority=priority-1
+            previous.priority=priority
+            current.save()
+            previous.save()
+            # PBI.objects.filter(pk=request.GET['id']).update(priority=priority-1)
+
         # pbis = PBI.objects.order_by('priority')
         # return render(request, 'productBacklog/pbi_list.html', {'pbi_list': pbis})
         return redirect('http://127.0.0.1:8000/productBacklog')
@@ -102,8 +110,13 @@ def downPBI(request):
         # a = str(ID)
         # ID = ID + 1
         priority = int(request.GET['priority'])
-        if priority > 0:
-            PBI.objects.filter(pk=request.GET['id']).update(priority=priority-1)
+        # if priority != 0:
+        current=PBI.objects.filter(priority=priority)[0]
+        future=PBI.objects.filter(priority=priority+1)[0]
+        current.priority=priority+1
+        future.priority=priority
+        current.save()
+        future.save()
         # pbis = PBI.objects.order_by('priority')
         # return render(request, 'productBacklog/pbi_list.html', {'pbi_list': pbis})
         return redirect('http://127.0.0.1:8000/productBacklog')
