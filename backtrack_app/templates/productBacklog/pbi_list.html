@@ -46,22 +46,23 @@
 
     {% for pbi in pbi_list %}
       <div id="tablediv">
-      
+
         <table id = "table">
           <tr style="display: flex; width: 1380px">
-            <th style="flex: 30%;">title</th>
+            <th style="flex: 20%;">title</th>
 {#            <th style="flex: 30%;">detail</th>#}
             <th style="flex: 15%;">story point</th>
             <th style="flex: 15%;">accumulated story points</th>
             <th style="flex:10%;">status</th>
-              <th style="flex:15%;">Delete</th>
-              <th style="flex:15%;">Edit</th>
+              <th style="flex:5%;">Delete</th>
+              <th style="flex:5%;">Edit</th>
+              <th style="flex: 10%">Priority</th>
           </tr>
 
           <tr style="display: flex; width: 1380px">
-            <td style="flex: 30%;">{{ pbi.description }} </td>
+            <td style="flex: 20%;">{{ pbi.description }} </td>
 {#            <td style="flex: 30%;">{{ pbi.description }}</td>#}
-            <td style="flex: 15%;" class="storypoint">{{ pbi.estimated_efforts }}</td>
+            <td style="flex: 15%;" class="storypoint">{{ pbi.remainStory }}</td>
             <td style="flex: 15%;" class="cumulated_storypoint">{{ pbi.cumulative_storypoint }}</td>
             <td style="flex: 10%;">{{ pbi.get_status_display }}</td>
 
@@ -78,17 +79,28 @@
             <!--down a pbi--> {% endcomment %}
            
             <!--delete a pbi-->
-            <td style="flex: 15%;">
+            <td style="flex: 5%;">
               <a href="/del/?sid={{ pbi.id_name }}"><button class="btn btn-danger" id="deleteButton">Delete</button></a>
             </td>
             <!--delete a pbi-->
-            
+
             <!--edit a pbi-->
-            <td  style="flex: 15%;">
+            <td  style="flex: 5%;">
               <!--<a href="/edit/?sid={{ pbi.id_name }}"><button class="btn btn-primary">Edit</button></a>-->
             <button class="btn btn-danger" onclick="openEditForm()" id="editButton">Edit</button></a>
             </td>
             <!--edit a pbi-->
+
+              <!--up a pbi-->
+              <td style="flex: 10%">
+                  <span style="flex: 50%;margin-right: 5px">
+                  <button onclick="upPriority()" class="priorityButton">Up</button>
+                  </span>
+                  <span style="flex: 50%; margin-left: 5px">
+                  <button onclick="downPriority()" class="priorityButton">Down</button>
+                  </span>
+              </td>
+              <!--up a pbi-->
 
           </tr>
         </table>
@@ -291,33 +303,39 @@
           border: solid 1px black;
            text-align: center;
           width: 50px;
-          background-color: yellowgreen;
+          background-color: lightgreen;
       }
       #submitForm{
           text-align: center;
           border: solid 1px black;
            width: 80px;
-          background-color: #bbccdd;
+          background-color: lightcyan;
       }
       #submitAdd{
           text-align: center;
           border: solid 1px black;
            width: 80px;
-          background-color: #bbccdd;
+          background-color: lightcyan;
       }
       #closeForm{
           border: solid 1px black;
           text-align: center;
            width: 80px;
-          background-color: #bbccdd;
+          background-color: lightcyan;
       }
-        #closeAdd{
+
+      #closeAdd{
           border: solid 1px black;
           text-align: center;
            width: 80px;
-          background-color: #bbccdd;
+          background-color: lightcyan;
       }
-
+      .priorityButton{
+          border: solid 1px black;
+          text-align: center;
+           /*width: 80px;*/
+          background-color: lightcyan;
+        }
       #buttons {
         display: flex;
         justify-content: center;
