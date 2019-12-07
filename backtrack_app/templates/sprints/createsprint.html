@@ -12,8 +12,8 @@
             <div id="notselected" class="thediv">
                 <div class="title">Product Backlog</div>
                 {% for pbi in pbi_list %}
-                <div class="pbi" onclick="pbiselected(event)" id="{{pbi.id}}">PBI {{pbi.id}}
-                    <span class="initEsti circle" style="float:right;">
+                <div class="pbi" onclick="pbiselected(event)" id="{{pbi.id}}">{{pbi.description}}
+                    <span class="initEsti circle" style="float:right;text-align: center;padding-top:3px;margin-top: 5px">
                             {{pbi.estimated_efforts }}
                     </span>
                 </div>
@@ -87,8 +87,8 @@
             var form = document.getElementById("form");
             for(i = 0; i < selectedPBIS.length; ++i){
                 var ele = document.createElement("input");
-                ele.type = "hidden"
-                ele.name = "pbis[]"
+                ele.type = "hidden";
+                ele.name = "pbis[]";
                 ele.value = selectedPBIS[i].id;
                 form.append(ele);
             }
@@ -149,7 +149,7 @@
     }
 
     .pbi{
-        width:200px;
+        width:400px;
         height:50px;
         border: 1px black solid;
         margin-left: 50px; 

@@ -21,7 +21,7 @@
             <li>
                 <div class="delbtn" onclick="delBtnOnClick(event)" rel="{{subtask.id}}">-</div>
                 <span class="initEsti circle" style="float:left; text-align: center"> <span style="margin-left:3px;">{{subtask.initialEstimatedEffort}}</span></span>
-                <span class="remainEsti circle" style="float:left; text-align: center" onclick="remainBtnOnlick(event)"  > 
+                <span class="remainEsti circle" style="float:left; text-align: center" onclick="remainBtnOnlick(event)"  >
                     <span style="margin-left:5px;" >{{subtask.remaining_efforts}}</span>
                     <form action="changeremain/" method="POST" class="remainform">
                         {%csrf_token%}
@@ -356,7 +356,7 @@
         display: inline-block;
         overflow: auto;
         margin-right:5px;
-        font-style: white;
+        color: white;
     }
 
 
