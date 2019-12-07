@@ -39,16 +39,16 @@ def product_backlog(request):
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
 
 
-class pbiViewAll(TemplateView):
-    template_name = 'productBacklog/pbi_list.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['pbi_list'] = PBI.objects.all()
-        return context
-
-    def home(request):
-        return redirect('http://127.0.0.1:8000/project/project')
+# class pbiViewAll(TemplateView):
+#     template_name = 'productBacklog/pbi_list.html'
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['pbi_list'] = PBI.objects.all()
+#         return context
+#
+#     def home(request):
+#         return redirect('http://127.0.0.1:8000/project/project')
 
     # def add(request):
     #     global Total_point
