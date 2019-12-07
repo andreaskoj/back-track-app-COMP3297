@@ -66,6 +66,7 @@ class PBI(models.Model):
     remainStory = models.IntegerField(null=True, default=10)
     priority=models.IntegerField(default=0)
     objects = models.Manager()
+    cumulative_storypoint=models.IntegerField(null=True, default=0, blank=True)
 
     # burndown=models.OneToOneField(BurndownChart, on_delete=models.CASCADE)
     def __str__(self):
