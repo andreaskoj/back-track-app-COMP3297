@@ -61,10 +61,10 @@ class PBI(models.Model):
     id = models.AutoField(primary_key=True)
     STATUS = (('NS', 'Not started'), ('IP', 'In progress'), ('C', 'Complete'), ('NF', 'NotFinish'))
     status = models.CharField(max_length=10, choices=STATUS, default='NS')
-    sprint = models.ForeignKey(SprintBacklog, null=True, on_delete=models.SET_NULL)
+    sprint = models.ForeignKey(SprintBacklog, null=True, on_delete=models.SET_NULL, blank=True)
     estimated_efforts = models.IntegerField(null=True)
     remainStory = models.IntegerField(null=True, default=10)
-
+    priority=models.IntegerField(default=0)
     objects = models.Manager()
 
     # burndown=models.OneToOneField(BurndownChart, on_delete=models.CASCADE)
@@ -82,7 +82,7 @@ class Task(models.Model):
 
     # burndown = models.OneToOneField(BurndownChart, on_delete=models.CASCADE)
     def __str__(self):
-        return self.description
+        return str(self.id)
 
 
 class SubTask(models.Model):
@@ -92,7 +92,7 @@ class SubTask(models.Model):
     pbi = models.ForeignKey(PBI, on_delete=models.CASCADE, related_name="SubTask", default=0)
     initialEstimatedEffort = models.IntegerField(null=True)
     remaining_efforts = models.IntegerField(null=True)
-    Developers = models.ManyToManyField(Developer, null=True)
+    Developers = models.ManyToManyField(Developer)
     STATUS = (('NS', 'Not started'), ('IP', 'In progress'), ('C', 'Complete'))
     status = models.CharField(max_length=10, choices=STATUS, default='IP')
 
