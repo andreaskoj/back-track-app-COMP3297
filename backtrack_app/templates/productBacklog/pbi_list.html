@@ -49,20 +49,36 @@
 
         <table id = "table">
           <tr style="display: flex; width: 1380px">
-            <th style="flex: 20%;">title</th>
+            <th style="flex: 25%;">title</th>
 {#            <th style="flex: 30%;">detail</th>#}
             <th style="flex: 15%;">story point</th>
             <th style="flex: 15%;">accumulated story points</th>
             <th style="flex:10%;">status</th>
               <th style="flex:5%;">Delete</th>
-              <th style="flex:5%;">Edit</th>
+              <!--<th style="flex:5%;">Edit</th>-->
               <th style="flex: 10%">Priority</th>
           </tr>
 
           <tr style="display: flex; width: 1380px">
-            <td style="flex: 20%;">{{ pbi.description }} </td>
+
+              <td style="flex: 25%;">
+                  <form action="" method="post" name="description">
+                      {%csrf_token%}
+                      <input type="hidden" name="pbiID" value={{pbi.id}}>
+                      <input type="text" value="{{ pbi.description }}" name="description" style="text-align: center;border: dashed 1px; width: 80%">
+                      <input type="submit" style="visibility: hidden; width: 0px;border-width: 0px;padding: 0px">
+                  </form>
+              </td>
 {#            <td style="flex: 30%;">{{ pbi.description }}</td>#}
-            <td style="flex: 15%;" class="storypoint">{{ pbi.remainStory }}</td>
+            <td style="flex: 15%;" class="storypoint">
+                <form action="" method="post" name="story">
+                    {%csrf_token%}
+                    <input type="hidden" name="pbiID" value={{pbi.id}}}>
+                    <input type="text" value="{{ pbi.remainStory }}" name="storypoint" style="text-align: center;border: dashed 1px; width: 80%">
+                    <input type="submit" style="visibility: hidden; width: 0px;border-width: 0px;padding: 0px">
+                </form>
+            </td>
+
             <td style="flex: 15%;" class="cumulated_storypoint">{{ pbi.cumulative_storypoint }}</td>
             <td style="flex: 10%;">{{ pbi.get_status_display }}</td>
 
@@ -88,10 +104,10 @@
             <!--delete a pbi-->
 
             <!--edit a pbi-->
-            <td  style="flex: 5%;">
-              <!--<a href="/edit/?sid={{ pbi.id_name }}"><button class="btn btn-primary">Edit</button></a>-->
-            <button class="btn btn-danger" onclick="openEditForm()" id="editButton">Edit</button>
-            </td>
+            <!--<td  style="flex: 5%;">-->
+              <!--&lt;!&ndash;<a href="/edit/?sid={{ pbi.id_name }}"><button class="btn btn-primary">Edit</button></a>&ndash;&gt;-->
+            <!--<button class="btn btn-danger" onclick="openEditForm()" id="editButton">Edit</button>-->
+            <!--</td>-->
             <!--edit a pbi-->
 
               <!--up a pbi-->
@@ -155,64 +171,65 @@
     </div>
 <!-- pop up for inputing -->
 
-<!-- pop up for inputing -->
-    <div class="form-popup" id="EditForm">
-      <form
-        action="/edit/?sid = {{ pbi.id_name }}"
-        class="form-container"
-        id="form"
-        method="GET"
-      >
-      {% csrf_token %}
-        <h3>Editting PBI</h3>
+<!--&lt;!&ndash; pop up for inputing &ndash;&gt;-->
+    <!--<div class="form-popup" id="EditForm">-->
+      <!--<form-->
+        <!--action="edit"-->
+        <!--class="form-container"-->
+        <!--id="form"-->
+        <!--method="POST"-->
+      <!--&gt;-->
+      <!--{% csrf_token %}-->
+        <!--<h3>Editting PBI</h3>-->
+          <!--<input id="pbiID" type="hidden" name="pbiID" value={{pbiID}}>-->
 
-        <!--<br />-->
-        <!--<label for="PBI ID"><b>ID</b></label>-->
-        <!--<br />-->
-        <!--<input type="text" value = "{{ pbi.id_name }}" name = "id_name"/>-->
-        <br />
-
-        <label for="title"><b>Description</b></label>
-        <br />
-        <input type="text" placeholder="Enter description" name = "title" required />
-        <!--<br />-->
-       <!---->
-        <!--<label for="detail"><b>Detail</b></label>-->
-        <!--<br />-->
-        <!--<input type="text" placeholder="Enter detail" name = "detail" required />-->
-        <br />
-
-        <label for="storypoint"><b>Story point</b></label>
-        <br />
-        <input type="text" placeholder="Enter storypoint" name = "story_point" required />
+        <!--&lt;!&ndash;<br />&ndash;&gt;-->
+        <!--&lt;!&ndash;<label for="PBI ID"><b>ID</b></label>&ndash;&gt;-->
+        <!--&lt;!&ndash;<br />&ndash;&gt;-->
+        <!--&lt;!&ndash;<input type="text" value = "{{ pbi.id_name }}" name = "id_name"/>&ndash;&gt;-->
         <!--<br />-->
 
-        <!--<label for="status"><b>Status</b></label>-->
+        <!--<label for="title"><b>Description</b></label>-->
         <!--<br />-->
-        <!--<select name = "status">-->
-            <!--<option value="Not Started">Not Started</option>-->
-            <!--<option value="In Progress">In Progress</option>-->
-            <!--<option value="Completed">Completed</option>-->
-            <!--<option value="Cancelled">Cancelled</option>-->
-        <!--</select>-->
-        <br />
+        <!--<input type="text" placeholder="Enter description" name = "title" required />-->
+        <!--&lt;!&ndash;<br />&ndash;&gt;-->
+       <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;<label for="detail"><b>Detail</b></label>&ndash;&gt;-->
+        <!--&lt;!&ndash;<br />&ndash;&gt;-->
+        <!--&lt;!&ndash;<input type="text" placeholder="Enter detail" name = "detail" required />&ndash;&gt;-->
+        <!--<br />-->
 
-        <br />
+        <!--<label for="storypoint"><b>Story point</b></label>-->
+        <!--<br />-->
+        <!--<input type="text" placeholder="Enter storypoint" name = "story_point" required />-->
+        <!--&lt;!&ndash;<br />&ndash;&gt;-->
 
-        <div style="display: flex">
-            <span style="flex: 50%">
-                <br />
-        <button type="submit" class="btn" id="submitForm">Submit</button>
-            </span>
-            <span style="flex: 50%">
-        <br />
+        <!--&lt;!&ndash;<label for="status"><b>Status</b></label>&ndash;&gt;-->
+        <!--&lt;!&ndash;<br />&ndash;&gt;-->
+        <!--&lt;!&ndash;<select name = "status">&ndash;&gt;-->
+            <!--&lt;!&ndash;<option value="Not Started">Not Started</option>&ndash;&gt;-->
+            <!--&lt;!&ndash;<option value="In Progress">In Progress</option>&ndash;&gt;-->
+            <!--&lt;!&ndash;<option value="Completed">Completed</option>&ndash;&gt;-->
+            <!--&lt;!&ndash;<option value="Cancelled">Cancelled</option>&ndash;&gt;-->
+        <!--&lt;!&ndash;</select>&ndash;&gt;-->
+        <!--<br />-->
 
-        <button type="button" class="btn cancel" onclick="closeEditForm()" id="closeForm">Close</button>
-            </span>
-        </div>
-      </form>
-    </div>
-<!-- pop up for inputing -->
+        <!--<br />-->
+
+        <!--<div style="display: flex">-->
+            <!--<span style="flex: 50%">-->
+                <!--<br />-->
+        <!--<button type="submit" class="btn" id="submitForm">Submit</button>-->
+            <!--</span>-->
+            <!--<span style="flex: 50%">-->
+        <!--<br />-->
+
+        <!--<button type="button" class="btn cancel" onclick="closeEditForm()" id="closeForm">Close</button>-->
+            <!--</span>-->
+        <!--</div>-->
+      <!--</form>-->
+    <!--</div>-->
+<!--&lt;!&ndash; pop up for inputing &ndash;&gt;-->
 
 
   </body>
@@ -231,9 +248,9 @@
         document.getElementById("AddForm").style.display = "none";
       }
 
-      function openEditForm() {
-        document.getElementById("EditForm").style.display = "block";
-      }
+      // function openEditForm() {
+      //   document.getElementById("EditForm").style.display = "block";
+      // }
 
       function closeEditForm() {
         document.getElementById("EditForm").style.display = "none";
@@ -300,14 +317,14 @@
           border: solid 1px black;
           text-align: center;
           width: 50px;
-          background-color: lightgrey;
-      }
-      #editButton{
-          border: solid 1px black;
-           text-align: center;
-          width: 50px;
           background-color: #ffffcc;
       }
+      /*#editButton{*/
+          /*border: solid 1px black;*/
+           /*text-align: center;*/
+          /*width: 50px;*/
+          /*background-color;*/
+      /*}*/
       #submitForm{
           text-align: center;
           border: solid 1px black;
