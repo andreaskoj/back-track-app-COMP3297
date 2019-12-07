@@ -31,6 +31,14 @@ def product_backlog(request):
                 pbi_list[i].priority-=1
                 pbi_list[i].save()
             pbi.delete()
+        if request.method =="POST":
+            pbi_id=request.POST.get('pbiID',False)
+            a=request.POST.get('description', False)
+            b=request.POST.get('storypoint',False)
+            item=PBI.objects.get(pk=int(pbi_id))
+            item.description=a
+            item.remainStory=b
+            item.save()
         users_project = Developer.objects.filter(user__username=user)[0].project
         sprint_backlog = Project.objects.filter(name=users_project)[0].sprintBacklog
         pbis = PBI.objects.order_by('priority') # by default we show a full view of list of pbis
@@ -73,7 +81,23 @@ def addPBI(request):
         # return render(request, 'productBacklog/pbi_list.html', {'pbi_list': pbis})
         return redirect('http://127.0.0.1:8000/productBacklog')
 
-
+# def edit(request):
+#     sid = request.GET.get('sid')
+#     a = str(request.GET['id_name'])
+#     pbi = PBI.objects.get(id_name = a)
+#     #a = pbi.id_name
+#     Total_point = Total_point - int(pbi.story_point)
+#     b = str(request.GET['title'])
+#     c = str(request.GET['detail'])
+#     d = request.GET['story_point']
+#     Total_point = Total_point + int(d)
+#     Global_Data.objects.filter(global_id = '00001').update(cumu_point = Total_point)
+#     e = str(Total_point)
+#     f = str(request.GET['status'])
+#     PBI.objects.filter(id_name = a).update(
+#                                   description = b, estimated_efforts = d,
+#                                   status = f)
+#     return render(request, 'pbi_edit.html', locals())
 
 # class pbiViewAll(TemplateView):
 #     template_name = 'productBacklog/pbi_list.html'
@@ -109,18 +133,6 @@ def addPBI(request):
     #     return redirect('/home/')
 
 
-#
-# def delete(request):
-#     global Total_point
-#     global Number
-#     sid = request.GET.get('sid')
-#     d = Product_Backlog_Item.objects.get(id_name = sid).story_point
-#     Total_point = Total_point - int(d)
-#     Number = Number - 1
-#     Global_Data.objects.filter(global_id = '00001').update(cumu_point = Total_point, num_pbis = Number)
-#     Product_Backlog_Item.objects.filter(id_name = sid).delete()
-#     return redirect('/home/')
-#
 # def edit(request):
 #     global Total_point
 #     sid = request.GET.get('sid')
@@ -139,24 +151,7 @@ def addPBI(request):
 #         return redirect('/home/')
 #     return render(request, 'pbi_edit.html', locals())
 #
-def edit(request):
-    global Total_point
-    sid = request.GET.get('sid')
-    a = str(request.GET['id_name'])
-    pbi = PBI.objects.get(id_name = a)
-    #a = pbi.id_name
-    Total_point = Total_point - int(pbi.story_point)
-    b = str(request.GET['title'])
-    c = str(request.GET['detail'])
-    d = request.GET['story_point']
-    Total_point = Total_point + int(d)
-    Global_Data.objects.filter(global_id = '00001').update(cumu_point = Total_point)
-    e = str(Total_point)
-    f = str(request.GET['status'])
-    PBI.objects.filter(id_name = a).update(
-                                  description = b, estimated_efforts = d,
-                                  status = f)
-    return render(request, 'pbi_edit.html', locals())
+
 #
 #
 # # def up(request):
