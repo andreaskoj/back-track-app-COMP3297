@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'sprints.apps.SprintsConfig',
     'login.apps.LoginConfig',
     'django.contrib.admin',
+    'reset_migrations',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
