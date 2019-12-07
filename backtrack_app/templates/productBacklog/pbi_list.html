@@ -80,14 +80,17 @@
            
             <!--delete a pbi-->
             <td style="flex: 5%;">
-              <a href="/del/?sid={{ pbi.id_name }}"><button class="btn btn-danger" id="deleteButton">Delete</button></a>
+                    <form action="" method="GET">
+                        <button class="DeleteButton" name="DeletePBI" value="{{pbi.id}}">Delete</button>
+                    </form>
+              <!--<a href="/del/?sid={{ pbi.id_name }}"><button class="btn btn-danger" id="deleteButton">Delete</button></a>-->
             </td>
             <!--delete a pbi-->
 
             <!--edit a pbi-->
             <td  style="flex: 5%;">
               <!--<a href="/edit/?sid={{ pbi.id_name }}"><button class="btn btn-primary">Edit</button></a>-->
-            <button class="btn btn-danger" onclick="openEditForm()" id="editButton">Edit</button></a>
+            <button class="btn btn-danger" onclick="openEditForm()" id="editButton">Edit</button>
             </td>
             <!--edit a pbi-->
 
@@ -117,24 +120,24 @@
 <!-- pop up for inputing -->
     <div class="form-popup" id="AddForm">
       <form
-        action="/add/"
+        action="add/"
         class="form-container"
         id="form"
-        method="get"
+        method="POST"
       >
       {% csrf_token %}
         <h3>Creating new PBI</h3>
         <br />
       
-        <label for="title"><b>Title</b></label>
+        <label for="title"><b>Description</b></label>
         <br />
         <input type="text" placeholder="Enter title" name = "title" required />
         <br />
        
-        <label for="detail"><b>Detail</b></label>
-        <br />
-        <textarea name="detail" cols="40" rows="10" wrap="soft" form="form"></textarea>
-        <br />
+        <!--<label for="detail"><b>Detail</b></label>-->
+        <!--<br />-->
+        <!--<textarea name="detail" cols="40" rows="10" wrap="soft" form="form"></textarea>-->
+        <!--<br />-->
 
         <label for="storypoint"><b>Story point</b></label>
         <br />
@@ -158,7 +161,7 @@
         action="/edit/?sid = {{ pbi.id_name }}"
         class="form-container"
         id="form"
-        method="get"
+        method="GET"
       >
       {% csrf_token %}
         <h3>Editting PBI</h3>
@@ -169,29 +172,29 @@
         <!--<input type="text" value = "{{ pbi.id_name }}" name = "id_name"/>-->
         <br />
 
-        <label for="title"><b>Title</b></label>
+        <label for="title"><b>Description</b></label>
         <br />
-        <input type="text" placeholder="Enter title" name = "title" required />
-        <br />
-       
-        <label for="detail"><b>Detail</b></label>
-        <br />
-        <input type="text" placeholder="Enter detail" name = "detail" required />
+        <input type="text" placeholder="Enter description" name = "title" required />
+        <!--<br />-->
+       <!---->
+        <!--<label for="detail"><b>Detail</b></label>-->
+        <!--<br />-->
+        <!--<input type="text" placeholder="Enter detail" name = "detail" required />-->
         <br />
 
         <label for="storypoint"><b>Story point</b></label>
         <br />
         <input type="text" placeholder="Enter storypoint" name = "story_point" required />
-        <br />
+        <!--<br />-->
 
-        <label for="status"><b>Status</b></label>
-        <br />
-        <select name = "status">
-            <option value="Not Started">Not Started</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Completed">Completed</option>
-            <option value="Cancelled">Cancelled</option>
-        </select>
+        <!--<label for="status"><b>Status</b></label>-->
+        <!--<br />-->
+        <!--<select name = "status">-->
+            <!--<option value="Not Started">Not Started</option>-->
+            <!--<option value="In Progress">In Progress</option>-->
+            <!--<option value="Completed">Completed</option>-->
+            <!--<option value="Cancelled">Cancelled</option>-->
+        <!--</select>-->
         <br />
 
         <br />
